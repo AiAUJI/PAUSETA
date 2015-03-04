@@ -7,7 +7,7 @@ import enviroment.Location;
 import enviroment.Segment;
 
 /**
- * An Agency is a privat or public company that possesses several resources.
+ * An Agency is a private or public company that possesses several resources.
  */
 public class Agency implements Serializable{
 	

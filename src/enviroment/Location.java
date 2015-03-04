@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Location implements Serializable{
 	
-	//Offset from the beginning of the origin
+	//Offset from the beginning of the origin in km
 	public double position;
 	
 	//Segment
