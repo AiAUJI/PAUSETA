@@ -23,8 +23,8 @@ public class Segment implements Serializable{
 	 */
 	public Segment(){
 		
-		this.origin = null;
-		this.destination = null;
+		this.origin = new Intersection();
+		this.destination = new Intersection();
 		this.length = 0.0;
 	}
 	

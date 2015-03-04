@@ -24,7 +24,7 @@ public class Bid implements Serializable{
 	public Bid(){
 		
 		this.resources = new ArrayList<Resource>();
-		this.bidder = null;
+		this.bidder = new Agency();
 		this.value = 0.0;
 	}
 	

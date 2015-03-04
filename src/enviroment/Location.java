@@ -20,7 +20,7 @@ public class Location implements Serializable{
 	public Location(){
 		
 		this.position = 0.0;
-		this.segment = null;
+		this.segment = new Segment();
 	}
 	
 	/**

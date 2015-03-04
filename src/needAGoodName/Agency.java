@@ -34,7 +34,7 @@ public class Agency implements Serializable{
 		this.id = null;
 		this.description = null;
 		this.type = null;
-		this.location = null;
+		this.location = new Location();
 		this.resources = new ArrayList<Resource>();
 	}
 	
