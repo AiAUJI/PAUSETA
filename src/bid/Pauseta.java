@@ -20,25 +20,69 @@ import needAGoodName.Resource;
 public class Pauseta implements Serializable{
 	
 	//Array to hold the Set Of All Bids
-	private ArrayList<CompleteBid> SAB = new ArrayList<CompleteBid>();
+	private ArrayList<CompleteBid> SAB;
 	
 	//Array to hold my bids
-	private ArrayList<CompleteBid> myOwnPrivateBids = new ArrayList<CompleteBid>();
+	private ArrayList<CompleteBid> myOwnPrivateBids;
 	
 	//Comparator used to sort a CompleteBid List
-	private Comparator<CompleteBid> completeBidComparator = new Comparator<CompleteBid>(){
-	    public int compare(CompleteBid c1, CompleteBid c2){
-	        
-	    	if(Math.sqrt(c1.value/c1.bids.size()) > Math.sqrt(c2.value/c2.bids.size()))
-	    		return 1;
-	    	
-	    	if(Math.sqrt(c1.value/c1.bids.size()) < Math.sqrt(c2.value/c2.bids.size()))
-	    		return -1;
-	    	
-	    	return 0;
-	    }};
+	private Comparator<CompleteBid> completeBidComparator;
 
+	/**
+	 * Default constructor. 
+	 */
+	public Pauseta(){
+		
+		this.SAB = new ArrayList<CompleteBid>();
+		this.myOwnPrivateBids = new ArrayList<CompleteBid>();
+		
+		this.completeBidComparator  = new Comparator<CompleteBid>(){
+		    public int compare(CompleteBid c1, CompleteBid c2){
+		        
+		    	if(Math.sqrt(c1.value/c1.bids.size()) > Math.sqrt(c2.value/c2.bids.size()))
+		    		return 1;
+		    	
+		    	if(Math.sqrt(c1.value/c1.bids.size()) < Math.sqrt(c2.value/c2.bids.size()))
+		    		return -1;
+		    	
+		    	return 0;
+		    }};
+	}
 	
+	/**
+	 * Constructor.
+	 * 
+	 * @param myOwnPrivateBids Private bids taking in count the synergy.
+	 */
+	public Pauseta(ArrayList<CompleteBid> myOwnPrivateBids){
+		
+		this.SAB = new ArrayList<CompleteBid>();
+		this.myOwnPrivateBids = myOwnPrivateBids;
+		
+		this.completeBidComparator  = new Comparator<CompleteBid>(){
+		    public int compare(CompleteBid c1, CompleteBid c2){
+		        
+		    	if(Math.sqrt(c1.value/c1.bids.size()) > Math.sqrt(c2.value/c2.bids.size()))
+		    		return 1;
+		    	
+		    	if(Math.sqrt(c1.value/c1.bids.size()) < Math.sqrt(c2.value/c2.bids.size()))
+		    		return -1;
+		    	
+		    	return 0;
+		    }};
+	}
+	
+	/**
+	 * Adds a CompleteBid to the SAB.
+	 * 
+	 * @param completeBid CompleteBid to add to the SAB.
+	 * @return A boolean whether the {@link CompleteBid} has been added or not.
+	 */
+	public boolean addCompleteBidToSAB(CompleteBid completeBid){
+				
+		return this.SAB.add(completeBid);
+	}
+	    
 	/**
 	 * Algorithm that chooses the best bet in each step
 	 * 
@@ -65,7 +109,8 @@ public class Pauseta implements Serializable{
 			
 			for(Bid b: cb.bids){
 				
-				if(!b.bidder.equals(bidder)){
+				System.out.println(b.bidder.id + " " + bidder.id);
+				if(!b.bidder.id.equals(bidder.id)){
 					
 					bids.add(b);
 				}
@@ -97,7 +142,7 @@ public class Pauseta implements Serializable{
 		bids.addAll(myBids);
 		
 		Collections.sort(bids, completeBidComparator);
-		
+				
 		while(!bids.isEmpty()){
 			
 			CompleteBid b = bids.get(0);
@@ -131,7 +176,12 @@ public class Pauseta implements Serializable{
 				}
 				
 				//Count all the resources in Requirement with the same type as r
-				int countRequirement = requirement.requirements.get(r.type);
+				int countRequirement;
+				
+				if(requirement.requirements.get(r.type) == null)
+					countRequirement = 0;
+				else
+					countRequirement = requirement.requirements.get(r.type);
 				
 				//It is bigger than the requirement
 				if(countIresult > countRequirement){

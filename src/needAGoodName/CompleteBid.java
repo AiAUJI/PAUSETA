@@ -36,6 +36,19 @@ public class CompleteBid implements Serializable{
 	}
 	
 	/**
+	 * Constructor.
+	 * 
+	 * @param bid A {@link Bid} that forms this {@link CompleteBid}.
+	 */
+	public CompleteBid(Bid bid){
+		
+		this.bids = new ArrayList<Bid>();
+		this.bids.add(bid);
+		
+		this.value = this.getValue();
+	}
+	
+	/**
 	 * Adds a {@link bid} to this {@link CompleteBid}.
 	 * 
 	 * @param bid {@link Bid} to be added.
@@ -114,6 +127,28 @@ public class CompleteBid implements Serializable{
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * Returns the information of the CompleteBid as a String
+	 * 
+	 * @return A string.
+	 */
+	public String toString(){
+		
+		String res = "";
+		
+		for(Bid b: this.bids){
+			
+			res += "Bid " + b.id + ":\n";
+			
+			for(Resource r: b.resources){
+				
+				res += "\tResource: " + r.type + " Value: " + r.value + "\n";
+			}
+		}
+		
+		return res;
 	}
 	
 }
