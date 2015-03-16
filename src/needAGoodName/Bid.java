@@ -2,12 +2,16 @@ package needAGoodName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Represents a simple or composite bid in some resources.
  */
 
 public class Bid implements Serializable{
+	
+	//Unique ID of the bid
+	public UUID id;
 
 	//Resources that form this bid
 	public ArrayList<Resource> resources;
@@ -23,6 +27,7 @@ public class Bid implements Serializable{
 	 */
 	public Bid(){
 		
+		this.id  = UUID.randomUUID();
 		this.resources = new ArrayList<Resource>();
 		this.bidder = new Agency();
 		this.value = 0.0;
@@ -36,9 +41,25 @@ public class Bid implements Serializable{
 	 */
 	public Bid(ArrayList<Resource> resources, Agency bidder){
 		
+		this.id  = UUID.randomUUID();
 		this.resources = resources;
 		this.bidder = bidder;
 		this.value = this.getValue();
+	}
+	
+	/**
+	 * Constructor. 
+	 *
+	 * @param  resources A list of {@link Resource} to be added.
+	 * @param  bidder The {@link Agency} that makes the {@link Bid}.
+	 * @param  value  	The value of the bid.
+	 */
+	public Bid(ArrayList<Resource> resources, Agency bidder, float value){
+		
+		this.id  = UUID.randomUUID();
+		this.resources = resources;
+		this.bidder = bidder;
+		this.value = value;
 	}
 	
 	/**
@@ -52,6 +73,7 @@ public class Bid implements Serializable{
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		resources.add(resource);
 		
+		this.id  = UUID.randomUUID();
 		this.resources = resources;
 		this.bidder = bidder;
 		this.value = this.getValue();

@@ -1,6 +1,7 @@
 package needAGoodName;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import enviroment.Location;
 
@@ -10,7 +11,7 @@ import enviroment.Location;
 public class Resource implements Serializable{
 
 	//id of the resource
-	public String id;
+	public UUID id;
 	
 	//Type of the resource
 	public String type;
@@ -29,7 +30,7 @@ public class Resource implements Serializable{
 	 */
 	public Resource(){
 		
-		this.id = null;
+		this.id = UUID.randomUUID();
 		this.type = null;
 		this.owner = new Agency();
 		this.location = new Location();
@@ -39,15 +40,14 @@ public class Resource implements Serializable{
 	/**
 	 * Constructor.
 	 * 
-	 * @param id A unique id for this {@link Resource}.
 	 * @param type The type of this {@link Resource}.
 	 * @param owner The owner of this {@link Resource}.
 	 * @param location The {@link Location} of this {@link Resource}.
 	 * @param value The value of this {@link Resource}.
 	 */
-	public Resource(String id, String type, Agency owner, Location location, double value){
+	public Resource(String type, Agency owner, Location location, double value){
 		
-		this.id = id;
+		this.id = UUID.randomUUID();
 		this.type = type;
 		this.owner = owner;
 		this.location = location;

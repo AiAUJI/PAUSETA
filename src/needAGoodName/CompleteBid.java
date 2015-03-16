@@ -2,9 +2,10 @@ package needAGoodName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
- * A CompleteBid is a list of {@link Bid} that complete a {@link Requirement}.
+ * A CompleteBid is a list of {@link Bid} that completes a {@link Requirement}.
  */
 public class CompleteBid implements Serializable{
 	
@@ -49,6 +50,20 @@ public class CompleteBid implements Serializable{
 	}
 	
 	/**
+	 * Adds a {@link CompleteBid} to this {@link CompleteBid}.
+	 * 
+	 * @param bid {@link CompleteBid} to be added.
+	 * @return A boolean whether the {@link CompleteBid} has been added or not.
+	 */
+	public boolean addCompleteBid(CompleteBid bid){
+		
+		boolean result = this.bids.addAll(bid.bids);
+		this.value = this.getValue();
+		
+		return result;
+	}
+	
+	/**
 	 * Returns the total value of this {@link CompleteBid}.
 	 * 
 	 * @return A double with the value of the whole {@link CompleteBid}.
@@ -63,6 +78,42 @@ public class CompleteBid implements Serializable{
 		}
 		
 		return value;
+	}
+	
+	/**
+	 * Returns an Array containing all the resources on this CompleteBid.
+	 * 
+	 * @return An Array with all the resources on this CompleteBid.
+	 */
+	public ArrayList<Resource> getResources(){
+		
+		ArrayList<Resource> result = new ArrayList<Resource>();
+		
+		for(Bid b: this.bids){
+			for(Resource r: b.resources){
+				
+				result.add(r);
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Returns an Array containing all the ids of the bids on this CompleteBid.
+	 * 
+	 * @return An Array with all the ids on this CompleteBid.
+	 */
+	public ArrayList<UUID> getIds(){
+		
+		ArrayList<UUID> result = new ArrayList<UUID>();
+		
+		for(Bid b: this.bids){
+			
+			result.add(b.id);
+		}
+		
+		return result;
 	}
 	
 }
