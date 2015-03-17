@@ -54,7 +54,7 @@ public class Bid implements Serializable{
 	 * @param  bidder The {@link Agency} that makes the {@link Bid}.
 	 * @param  value  	The value of the bid.
 	 */
-	public Bid(ArrayList<Resource> resources, Agency bidder, float value){
+	public Bid(ArrayList<Resource> resources, Agency bidder, double value){
 		
 		this.id  = UUID.randomUUID();
 		this.resources = resources;
