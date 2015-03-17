@@ -10,6 +10,8 @@ import enviroment.Location;
  */
 public class Resource implements Serializable{
 
+	private static final long serialVersionUID = -1959051689685908381L;
+
 	//id of the resource
 	public UUID id;
 	

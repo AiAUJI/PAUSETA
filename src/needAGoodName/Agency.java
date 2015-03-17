@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import enviroment.Location;
-import enviroment.Segment;
 
 /**
  * An Agency is a private or public company that possesses several resources.
  */
 public class Agency implements Serializable{
 	
+	private static final long serialVersionUID = 5992483841157939550L;
+
 	//Id of the agency
 	public String id;
 	

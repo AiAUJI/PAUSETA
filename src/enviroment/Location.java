@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class Location implements Serializable{
 	
+	private static final long serialVersionUID = -4639648081136970198L;
+
 	//Offset from the beginning of the origin in km
 	public double position;
 	

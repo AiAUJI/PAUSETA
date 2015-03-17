@@ -8,6 +8,9 @@ import java.util.ArrayList;
  */
 public class Intersection implements Serializable{
 	
+
+	private static final long serialVersionUID = 3885620456847709732L;
+
 	//In segments
 	public ArrayList<Segment> in;
 	

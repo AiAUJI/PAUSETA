@@ -2,11 +2,9 @@ package bid;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -22,6 +20,8 @@ import needAGoodName.Resource;
  *
  */
 public class Pauseta implements Serializable{
+
+	private static final long serialVersionUID = -2359527997110629812L;
 
 	//Array to hold the Set Of All Bids
 	private ArrayList<Bid> SAB;

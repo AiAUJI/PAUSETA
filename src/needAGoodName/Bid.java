@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public class Bid implements Serializable{
 	
+	private static final long serialVersionUID = 7535230953550879514L;
+
 	//Unique ID of the bid
 	public UUID id;
 

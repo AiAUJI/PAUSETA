@@ -9,6 +9,8 @@ import java.util.UUID;
  */
 public class CompleteBid implements Serializable{
 	
+	private static final long serialVersionUID = 8310539854431036184L;
+
 	//Bids that form the complete bid
 	public ArrayList<Bid> bids;
 	

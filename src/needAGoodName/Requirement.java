@@ -8,6 +8,8 @@ import java.util.HashMap;
  */
 public class Requirement implements Serializable{
 	
+	private static final long serialVersionUID = 4180038369465460978L;
+	
 	//A dictionary where the key is the type of the resource needed and 
 	//the value is the quantity needed
 	public HashMap<String, Integer> requirements;

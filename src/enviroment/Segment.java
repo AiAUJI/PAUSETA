@@ -8,6 +8,8 @@ import java.io.Serializable;
  */
 public class Segment implements Serializable{
 
+	private static final long serialVersionUID = -6853406084306746147L;
+
 	//Where the segment is accessed from
 	public Intersection origin;
 	
