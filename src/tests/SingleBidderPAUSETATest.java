@@ -2,6 +2,9 @@ package tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import bid.Pauseta;
 import enviroment.Location;
@@ -12,12 +15,10 @@ import needAGoodName.Requirement;
 import needAGoodName.Resource;
 
 
-
 /**
  * Let's see if PAUSETA works
  *
  */
-//TODO: This is the worst code ever written, please use variables so you don't create the resources twice. Att. You from the past.
 public class SingleBidderPAUSETATest {
 
 	public static void main(String[] args) {
@@ -27,21 +28,33 @@ public class SingleBidderPAUSETATest {
 		Agency beggyAgency = new Agency("1", "A beggy test Agency", "Vegetables provider", new Location(), new ArrayList<Resource>());
 		
 		//Some test resources
-		baconAgency.addResource(new Resource("Regular bacon", baconAgency, new Location(), 120));
-		baconAgency.addResource(new Resource("Regular bacon", baconAgency, new Location(), 110));
-		baconAgency.addResource(new Resource("Crispy bacon", baconAgency, new Location(), 160));
-		baconAgency.addResource(new Resource("Crispy bacon", baconAgency, new Location(), 140));
-		baconAgency.addResource(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 260));
-		baconAgency.addResource(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 240));
+		ArrayList<Resource> baconAgencyResources = new ArrayList<Resource>();
+		ArrayList<Resource> beggyAgencyResources = new ArrayList<Resource>();
 
-		beggyAgency.addResource(new Resource("Brocoli", beggyAgency, new Location(), 120));
-		beggyAgency.addResource(new Resource("Brocoli", beggyAgency, new Location(), 110));
-		beggyAgency.addResource(new Resource("Boiled eggplant", beggyAgency, new Location(), 160));
-		beggyAgency.addResource(new Resource("Boiled eggplant", beggyAgency, new Location(), 140));
-		beggyAgency.addResource(new Resource("Crispy bacon", beggyAgency, new Location(), 260));
-		beggyAgency.addResource(new Resource("Crispy bacon", beggyAgency, new Location(), 240));
-
+		//Bacon agency
+		baconAgencyResources.add(new Resource("Regular bacon", baconAgency, new Location(), 120));
+		baconAgencyResources.add(new Resource("Regular bacon", baconAgency, new Location(), 110));
+		baconAgencyResources.add(new Resource("Crispy bacon", baconAgency, new Location(), 160));
+		baconAgencyResources.add(new Resource("Crispy bacon", baconAgency, new Location(), 140));
+		baconAgencyResources.add(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 260));
+		baconAgencyResources.add(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 240));
 		
+		//Beggy agency
+		beggyAgencyResources.add(new Resource("Brocoli", beggyAgency, new Location(), 120));
+		beggyAgencyResources.add(new Resource("Brocoli", beggyAgency, new Location(), 110));
+		beggyAgencyResources.add(new Resource("Boiled eggplant", beggyAgency, new Location(), 160));
+		beggyAgencyResources.add(new Resource("Boiled eggplant", beggyAgency, new Location(), 140));
+		beggyAgencyResources.add(new Resource("Crispy bacon", beggyAgency, new Location(), 260));
+		beggyAgencyResources.add(new Resource("Crispy bacon", beggyAgency, new Location(), 240));
+		
+		//Add the resources to the baconAgency
+		for(int i = 0; i < baconAgencyResources.size(); i++)
+			baconAgency.addResource(baconAgencyResources.get(i));
+
+		//Add the resources to the beggyAgency
+		for(int i = 0; i < beggyAgencyResources.size(); i++)
+			beggyAgency.addResource(beggyAgencyResources.get(i));
+
 		//Requirements
 		HashMap<String, Integer> requirementsMap = new HashMap<String, Integer>();
 		requirementsMap.put("Crispy bacon", 3);
@@ -51,50 +64,60 @@ public class SingleBidderPAUSETATest {
 				
 		Requirement requirements = new Requirement(requirementsMap);
 		
-		//Some random synergy
-		ArrayList<Resource> random = new ArrayList<Resource>();
-		random.add(new Resource("Regular bacon", baconAgency, new Location(), 120));
-		random.add(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 260));
+		//Calculate synergys, thanks to magic
+		OrderedPowerSet<Resource> baconSet = new OrderedPowerSet<Resource>(baconAgencyResources);
+		ArrayList<Bid> baconSynergyList = new ArrayList<Bid>();
+
+		for(int i = 1; i < baconAgencyResources.size() + 1; i++){
+			
+			List<LinkedHashSet<Resource>> baconSynergy = baconSet.getPermutationsList(i);
+			
+			for(Set<Resource> s: baconSynergy){
+				
+				baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, 200));
+			}
+		}
 		
-		CompleteBid cbBaconAgency = new CompleteBid();
-		cbBaconAgency.addBid(new Bid(random, baconAgency, 450));
-		ArrayList<CompleteBid> cbBaconAgencyArray = new ArrayList<CompleteBid>();
-		cbBaconAgencyArray.add(cbBaconAgency);
+		OrderedPowerSet<Resource> beggySet = new OrderedPowerSet<Resource>(beggyAgencyResources);
+		ArrayList<Bid> beggySynergyList = new ArrayList<Bid>();
+
+		for(int i = 1; i < beggyAgencyResources.size()+1; i++){
+			
+			List<LinkedHashSet<Resource>> beggySynergy = beggySet.getPermutationsList(i);
+			
+			for(Set<Resource> s: beggySynergy){
+				
+				beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, 200));
+			}
+		}
+
 
 		//One pauseta for every agency
-		Pauseta pausetaBaconAgency = new Pauseta(cbBaconAgencyArray);
-		Pauseta pausetaBeggyAgency = new Pauseta();
+		Pauseta pausetaBaconAgency = new Pauseta(baconSynergyList);
+		Pauseta pausetaBeggyAgency = new Pauseta(beggySynergyList);
 		
 		//This should be do with Jade, but this is a test
+		//This piece of code "sends" the resources of each agency to the others
 		//TODO: Work in improving constructors, stop this madness
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Regular bacon", baconAgency, new Location(), 120), baconAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Regular bacon", baconAgency, new Location(), 110), baconAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", baconAgency, new Location(), 160), baconAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", baconAgency, new Location(), 140), baconAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 260), baconAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 240), baconAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Brocoli", beggyAgency, new Location(), 120), beggyAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Brocoli", beggyAgency, new Location(), 110), beggyAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Boiled eggplant", beggyAgency, new Location(), 160), beggyAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Boiled eggplant", beggyAgency, new Location(), 140), beggyAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", beggyAgency, new Location(), 260), beggyAgency)));
-		pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", beggyAgency, new Location(), 240), beggyAgency)));
+		for(int i = 0; i < baconAgencyResources.size(); i++)
+			pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(baconAgencyResources.get(i), baconAgency)));
+
+		for(int i = 0; i < baconAgencyResources.size(); i++)
+			pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(baconAgencyResources.get(i), baconAgency)));
 		
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Brocoli", beggyAgency, new Location(), 120), beggyAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Brocoli", beggyAgency, new Location(), 110), beggyAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Boiled eggplant", beggyAgency, new Location(), 160), beggyAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Boiled eggplant", beggyAgency, new Location(), 140), beggyAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", beggyAgency, new Location(), 260), beggyAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", beggyAgency, new Location(), 240), beggyAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Regular bacon", baconAgency, new Location(), 120), baconAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Regular bacon", baconAgency, new Location(), 110), baconAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", baconAgency, new Location(), 160), baconAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Crispy bacon", baconAgency, new Location(), 140), baconAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 260), baconAgency)));
-		pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(new Resource("Unbelievable crispy bacon", baconAgency, new Location(), 240), baconAgency)));
+		for(int i = 0; i < beggyAgencyResources.size(); i++)
+			pausetaBaconAgency.addCompleteBidToSAB(new CompleteBid(new Bid(beggyAgencyResources.get(i), beggyAgency)));
+
+		for(int i = 0; i < beggyAgencyResources.size(); i++)
+			pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(beggyAgencyResources.get(i), beggyAgency)));
 		
+
 		//Actually do something
-		//System.out.println("1\t " + pausetaBaconAgency.greedyPausetaBid(baconAgency, 1, requirements).toString());
-		System.out.println("2\t " + pausetaBeggyAgency.greedyPausetaBid(beggyAgency, 1, requirements).toString());
+		System.out.println("Bacon: ");
+		System.out.println(pausetaBaconAgency.greedyPausetaBid(baconAgency, 6, requirements).toString());
+		System.out.println("Beggy: ");
+		System.out.println(pausetaBeggyAgency.greedyPausetaBid(beggyAgency, 6, requirements).toString());
+		
+		//pausetaBaconAgency.greedyPausetaBid(baconAgency, 1, requirements);
 	}
 }

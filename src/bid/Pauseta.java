@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import needAGoodName.Agency;
@@ -18,186 +22,204 @@ import needAGoodName.Resource;
  *
  */
 public class Pauseta implements Serializable{
-	
+
 	//Array to hold the Set Of All Bids
-	private ArrayList<CompleteBid> SAB;
-	
+	private ArrayList<Bid> SAB;
+
 	//Array to hold my bids
-	private ArrayList<CompleteBid> myOwnPrivateBids;
-	
+	private ArrayList<Bid> myOwnPrivateBids;
+
 	//Comparator used to sort a CompleteBid List
-	private Comparator<CompleteBid> completeBidComparator;
+	private Comparator<Bid> bidComparator;
 
 	/**
 	 * Default constructor. 
 	 */
 	public Pauseta(){
-		
-		this.SAB = new ArrayList<CompleteBid>();
-		this.myOwnPrivateBids = new ArrayList<CompleteBid>();
-		
-		this.completeBidComparator  = new Comparator<CompleteBid>(){
-		    public int compare(CompleteBid c1, CompleteBid c2){
-		        
-		    	if(Math.sqrt(c1.value/c1.bids.size()) > Math.sqrt(c2.value/c2.bids.size()))
-		    		return 1;
-		    	
-		    	if(Math.sqrt(c1.value/c1.bids.size()) < Math.sqrt(c2.value/c2.bids.size()))
-		    		return -1;
-		    	
-		    	return 0;
-		    }};
+
+		this.SAB = new ArrayList<Bid>();
+		this.myOwnPrivateBids = new ArrayList<Bid>();
+
+		this.bidComparator  = new Comparator<Bid>(){
+			public int compare(Bid b1, Bid b2){
+
+				if(Math.sqrt(b1.value/b1.resources.size()) > Math.sqrt(b2.value/b2.resources.size()))
+					return 1;
+
+				if(Math.sqrt(b1.value/b1.resources.size()) < Math.sqrt(b2.value/b2.resources.size()))
+					return -1;
+
+				return 0;
+			}};
 	}
-	
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param myOwnPrivateBids Private bids taking in count the synergy.
 	 */
-	public Pauseta(ArrayList<CompleteBid> myOwnPrivateBids){
-		
-		this.SAB = new ArrayList<CompleteBid>();
+	public Pauseta(ArrayList<Bid> myOwnPrivateBids){
+
+		this.SAB = new ArrayList<Bid>();
 		this.myOwnPrivateBids = myOwnPrivateBids;
-		
-		this.completeBidComparator  = new Comparator<CompleteBid>(){
-		    public int compare(CompleteBid c1, CompleteBid c2){
-		        
-		    	if(Math.sqrt(c1.value/c1.bids.size()) > Math.sqrt(c2.value/c2.bids.size()))
-		    		return 1;
-		    	
-		    	if(Math.sqrt(c1.value/c1.bids.size()) < Math.sqrt(c2.value/c2.bids.size()))
-		    		return -1;
-		    	
-		    	return 0;
-		    }};
+
+		this.bidComparator  = new Comparator<Bid>(){
+			public int compare(Bid b1, Bid b2){
+
+				if(Math.sqrt(b1.value/b1.resources.size()) > Math.sqrt(b2.value/b2.resources.size()))
+					return 1;
+
+				if(Math.sqrt(b1.value/b1.resources.size()) < Math.sqrt(b2.value/b2.resources.size()))
+					return -1;
+
+				return 0;
+			}};
 	}
-	
+
 	/**
-	 * Adds a CompleteBid to the SAB.
+	 * Adds the bids of a CompleteBid to the SAB.
 	 * 
 	 * @param completeBid CompleteBid to add to the SAB.
-	 * @return A boolean whether the {@link CompleteBid} has been added or not.
+	 * @return A boolean whether all the {@link Bid} have been added or not.
 	 */
 	public boolean addCompleteBidToSAB(CompleteBid completeBid){
-				
-		return this.SAB.add(completeBid);
+
+		boolean res = true;
+
+		for(Bid b: completeBid.bids){
+
+			res &= this.SAB.add(b);
+		}
+
+		return res;
 	}
-	    
+
 	/**
-	 * Algorithm that chooses the best bet in each step
+	 * Algorithm that chooses a pretty good bid in each step.
 	 * 
 	 * @param bidder The identifier of the bidder.
 	 * @param stage The stage of the auction.
 	 * @param requirement Requirements that need to be fulfilled.
-	 * @return The best bid that can be offered.
+	 * @return The best CompleteBid that can be offered.
 	 */
 	public CompleteBid greedyPausetaBid(Agency bidder, int stage, Requirement requirement){
-		
+
 		//Array to hold the bids I can do
-		ArrayList<CompleteBid> myBids = new ArrayList<CompleteBid>();
-		
+		ArrayList<Bid> myBids = new ArrayList<Bid>();
+
 		//Array to hold bids that don't belong to me
-		ArrayList<CompleteBid> theirBids = new ArrayList<CompleteBid>();
-		
+		ArrayList<Bid> theirBids = new ArrayList<Bid>();
+
 		//Array to hold the ids already used
 		ArrayList<UUID> idsUsed = new ArrayList<UUID>();
-		
+
 		//Iterate over the SAB looking for bids that are from other bidders
-		for(CompleteBid cb: SAB){
-			
-			ArrayList<Bid> bids = new ArrayList<Bid>();
-			
-			for(Bid b: cb.bids){
-				
-				System.out.println(b.bidder.id + " " + bidder.id);
-				if(!b.bidder.id.equals(bidder.id)){
-					
-					bids.add(b);
-				}
-				
-				theirBids.add(new CompleteBid(bids));
+		ArrayList<Bid> bids;
+
+		for(Bid b: SAB){
+
+			if(!b.bidder.id.equals(bidder.id)){
+
+				theirBids.add(b);
 			}
 		}
-		
+
 		//myBids is calculated by using bids that involve an equal or less number
 		//of type of resources than stage.
-		for(CompleteBid b: myOwnPrivateBids){
-			
-			if(b.bids.size() <= stage){
-				
+		for(Bid b: myOwnPrivateBids){
+
+			if(b.resources.size() <= stage){
+
 				myBids.add(b);
 			}
 		}
 
 		//CompleteBid to be returned, g in the original paper
 		CompleteBid result = new CompleteBid();
-		
+
 		if(myBids.isEmpty()){
-			
+
 			return result;
 		}
-		
+
 		//Join both lists and sort it
-		ArrayList<CompleteBid> bids = new ArrayList<CompleteBid>(theirBids);
+		bids = new ArrayList<Bid>(theirBids);
 		bids.addAll(myBids);
-		
-		Collections.sort(bids, completeBidComparator);
-				
+
+		Collections.sort(bids, bidComparator);
+
 		while(!bids.isEmpty()){
-			
-			CompleteBid b = bids.get(0);
+
+			Bid currentBid = bids.get(0);
 			bids.remove(0);
-			
-			//For each bid in the complete bid
-			for(Bid bid: b.bids){
-				
-				//If the id of the bid has been used before
-				if(idsUsed.contains(bid.id)){
-					continue;
-				}
+
+			//If the id of the bid has been used before, skip
+			if(idsUsed.contains(currentBid.id)){
+
+				continue;
 			}
-			
-			//Name taken from the original pseudocode
-			ArrayList<Resource> Iresult = result.getResources();
-			ArrayList<Resource> Ib = b.getResources();
-			
+
+			//Resources to compare
+			ArrayList<Resource> resourcesResult = result.getResources();
+			ArrayList<Resource> resourcesCurrentBid = currentBid.resources;
+
 			//If for each resource in the bid, it fulfills the requirement add it
 			boolean add = true;
-			
-			for(Resource r: Ib){
-				
-				//Count all the resources in Iresult with the same type as r
-				int countIresult = 0;
-				
-				for(Resource rIresult: Iresult){
-					
-					if(rIresult.type.equals(r.type))
-						countIresult++;
-				}
-				
-				//Count all the resources in Requirement with the same type as r
-				int countRequirement;
-				
-				if(requirement.requirements.get(r.type) == null)
-					countRequirement = 0;
-				else
-					countRequirement = requirement.requirements.get(r.type);
-				
-				//It is bigger than the requirement
-				if(countIresult > countRequirement){
-					
-					add = false;
+			Map<String, Integer> counter = new HashMap<String, Integer>();
+
+			for(Resource r: resourcesCurrentBid){
+
+				//Check if all the resource types in the currentBid are required
+				add &= requirement.requirements.containsKey(r.type);
+
+				//Count how many of each resource type are there in the currentBid
+				Integer value  = counter.get(r.type);
+
+				if(value == null){
+
+					counter.put(r.type, 1);
+				} else {
+
+					counter.put(r.type, value + 1);
 				}
 			}
 			
-			//TODO: Check if this works, maybe each CompleteBid needs its own UUID rather than adding all the UUIDs for the separated Bids
-			if(add){
+			//Add in the counter the resources that have been already added from past bids
+			for(Resource r: resourcesResult){
 				
-				result.addCompleteBid(b);
-				idsUsed.addAll(b.getIds());
+				Integer value  = counter.get(r.type);
+
+				if(value == null){
+
+					counter.put(r.type, 1);
+				} else {
+
+					counter.put(r.type, value + 1);
+				}
+			}
+			
+			//We know that all the resources in the currentBid are in the requirements
+			//Now we need to know if the counter for each resource fits within the requirements
+			if(add){
+
+				Set<String> keys = counter.keySet();
+				
+				for(String key: keys){
+
+					//System.out.println("Key: " + key + " Value: " + counter.get(key) + " req: " + requirement.requirements.get(key));
+					add &= (counter.get(key) <= requirement.requirements.get(key));
+				}
+			}
+
+
+			//Everything checks out, add the bid
+			if(add){
+
+				result.addBid(currentBid);
+				idsUsed.add(currentBid.id);
 			}
 		}
-		
+
 		return result;	
 	}
 }

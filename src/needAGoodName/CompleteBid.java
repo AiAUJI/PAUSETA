@@ -140,7 +140,7 @@ public class CompleteBid implements Serializable{
 		
 		for(Bid b: this.bids){
 			
-			res += "Bid " + b.id + ":\n";
+			res += "Bid: " + b.id + " Value: " + b.value + "\n";
 			
 			for(Resource r: b.resources){
 				
