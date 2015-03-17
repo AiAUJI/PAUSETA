@@ -111,13 +111,28 @@ public class SingleBidderPAUSETATest {
 		for(int i = 0; i < beggyAgencyResources.size(); i++)
 			pausetaBeggyAgency.addCompleteBidToSAB(new CompleteBid(new Bid(beggyAgencyResources.get(i), beggyAgency)));
 		
-
-		//Actually do something
-		System.out.println("Bacon: ");
-		System.out.println(pausetaBaconAgency.greedyPausetaBid(baconAgency, 6, requirements).toString());
-		System.out.println("Beggy: ");
-		System.out.println(pausetaBeggyAgency.greedyPausetaBid(beggyAgency, 6, requirements).toString());
 		
-		//pausetaBaconAgency.greedyPausetaBid(baconAgency, 1, requirements);
+		//Simulate the real communication
+		
+		CompleteBid baconSolution;
+		CompleteBid beggySolution;
+		
+		for(int i = 0; i < 6; i++){
+			
+			System.out.println("ITERATION: " + (i + 1));
+			
+			System.out.println("Bacon agengy proposed complete solution: ");
+			baconSolution = pausetaBaconAgency.greedyPausetaBid(baconAgency, 6, requirements);
+			System.out.println(baconSolution.toString());
+			
+			System.out.println("Beggy agency proposed complete solution: ");
+			beggySolution = pausetaBeggyAgency.greedyPausetaBid(beggyAgency, 6, requirements);
+			System.out.println(beggySolution.toString());
+			
+			//Communicate the results to each other
+			pausetaBaconAgency.addCompleteBidToSAB(beggySolution);
+			pausetaBeggyAgency.addCompleteBidToSAB(baconSolution);
+
+		}
 	}
 }
