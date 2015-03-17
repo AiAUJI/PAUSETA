@@ -95,7 +95,7 @@ public class Pauseta implements Serializable{
 	}
 
 	/**
-	 * Algorithm that chooses a pretty good bid in each step.
+	 * The algorithm that is described in the original paper. It gets a pretty good solution to fullfil the requirements using Composite bids.
 	 * 
 	 * @param bidder The identifier of the bidder.
 	 * @param stage The stage of the auction.
