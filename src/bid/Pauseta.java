@@ -24,7 +24,7 @@ public class Pauseta implements Serializable{
 	private static final long serialVersionUID = -2359527997110629812L;
 
 	//Array to hold the Set Of All Bids
-	private ArrayList<Bid> SAB;
+	public ArrayList<Bid> SAB;
 
 	//Array to hold my bids
 	private ArrayList<Bid> myOwnPrivateBids;
