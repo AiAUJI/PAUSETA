@@ -86,7 +86,13 @@ public class PAUSETABaconAgent extends Agent{
 				
 				if(add){
 				
-					baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, value + SYNERGY));
+					if(i != 1){
+						
+						baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, value + SYNERGY));
+					}else{
+						
+						baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, value));
+					}
 				}
 			}
 		}

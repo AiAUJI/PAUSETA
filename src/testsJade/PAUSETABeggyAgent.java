@@ -25,7 +25,7 @@ public class PAUSETABeggyAgent extends Agent{
 
 	protected void setup(){
 		
-		Agency beggyAgency = new Agency("0", "A beggy test Agency", "beggy provider", new Location(), new ArrayList<Resource>());
+		Agency beggyAgency = new Agency("1", "A beggy test Agency", "Vegetables provider", new Location(), new ArrayList<Resource>());
 		
 		ArrayList<Resource> beggyAgencyResources = new ArrayList<Resource>();
 
@@ -85,8 +85,14 @@ public class PAUSETABeggyAgent extends Agent{
 				}
 				
 				if(add){
-				
-					beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, value + SYNERGY));
+					
+					if(i != 1){
+						
+						beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, value + SYNERGY));
+					}else{
+						
+						beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, value));
+					}
 				}
 			}
 		}

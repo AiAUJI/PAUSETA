@@ -28,10 +28,13 @@ public class Pauseta implements Serializable{
 
 	//Array to hold my bids
 	private ArrayList<Bid> myOwnPrivateBids;
+	
+	//Variable to hold previous highest value
+	private double previousHighestValue;
 
 	//Comparator used to sort a CompleteBid List
 	private Comparator<Bid> bidComparator;
-
+	
 	/**
 	 * Default constructor. 
 	 */
@@ -39,6 +42,7 @@ public class Pauseta implements Serializable{
 
 		this.SAB = new ArrayList<Bid>();
 		this.myOwnPrivateBids = new ArrayList<Bid>();
+		this.previousHighestValue = -1.0;
 
 		this.bidComparator  = new Comparator<Bid>(){
 			public int compare(Bid b1, Bid b2){
@@ -62,6 +66,7 @@ public class Pauseta implements Serializable{
 
 		this.SAB = new ArrayList<Bid>();
 		this.myOwnPrivateBids = myOwnPrivateBids;
+		this.previousHighestValue = -1.0;
 
 		this.bidComparator  = new Comparator<Bid>(){
 			public int compare(Bid b1, Bid b2){
@@ -93,9 +98,31 @@ public class Pauseta implements Serializable{
 
 		return res;
 	}
+	
+	/**
+	 * Updates the value for the previous highest value.
+	 * 
+	 * @param value Value to become the new highest value.
+	 * @return A boolean whether the new value is highest than the previous one.
+	 */
+	public boolean updatePreviousHighestValue(double value){
+		
+		boolean ret;
+		
+		if(value >= this.previousHighestValue){
+			
+			ret = true;
+			this.previousHighestValue = value;
+		}else{
+			
+			ret = false;
+		}
+		
+		return ret;
+	}
 
 	/**
-	 * The algorithm that is described in the original paper. It gets a pretty good solution to fullfil the requirements using Composite bids.
+	 * The algorithm that is described in the original paper. It gets a pretty good solution to fulfill the requirements using Composite bids.
 	 * 
 	 * @param bidder The identifier of the bidder.
 	 * @param stage The stage of the auction.
@@ -218,6 +245,12 @@ public class Pauseta implements Serializable{
 				result.addBid(currentBid);
 				idsUsed.add(currentBid.id);
 			}
+		}
+		
+		//Check if the current Bid has a higher value than the previousHighestBid
+		if(result.getValue() <= this.previousHighestValue){
+			
+			return new CompleteBid();
 		}
 
 		return result;	

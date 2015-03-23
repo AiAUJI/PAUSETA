@@ -139,16 +139,20 @@ public class CompleteBid implements Serializable{
 	public String toString(){
 		
 		String res = "";
+		double totalValue = 0.0;
 		
 		for(Bid b: this.bids){
 			
 			res += "Bid: " + b.id + " Value: " + b.value + "\n";
+			totalValue += b.value;
 			
 			for(Resource r: b.resources){
 				
 				res += "\tResource: " + r.type + " Value: " + r.value + "\n";
 			}
 		}
+		
+		res += "Total value: " + totalValue + "\n";
 		
 		return res;
 	}
