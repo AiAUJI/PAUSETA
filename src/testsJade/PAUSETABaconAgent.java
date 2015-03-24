@@ -99,7 +99,7 @@ public class PAUSETABaconAgent extends Agent{
 		
 		Pauseta pausetaBaconAgency = new Pauseta(baconSynergyList);
 
-		PAUSETASendBehaviour pausetaBe = new PAUSETASendBehaviour(this, baconAgency, 1, pausetaBaconAgency, requirements);
+		PAUSETARegisterBehaviour pausetaBe = new PAUSETARegisterBehaviour(this, baconAgency, pausetaBaconAgency, requirements, 1, 0);
 		
 		addBehaviour(pausetaBe);
 	}

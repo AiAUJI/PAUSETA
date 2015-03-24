@@ -109,7 +109,7 @@ public class Pauseta implements Serializable{
 		
 		boolean ret;
 		
-		if(value >= this.previousHighestValue){
+		if(value > this.previousHighestValue){
 			
 			ret = true;
 			this.previousHighestValue = value;
