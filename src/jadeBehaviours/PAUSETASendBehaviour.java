@@ -1,4 +1,4 @@
-package testsJade;
+package jadeBehaviours;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -45,9 +45,6 @@ public class PAUSETASendBehaviour extends Behaviour{
 		//Calculate the CompleteBid for the given stage
 		CompleteBid cb = this.pauseta.greedyPausetaBid(this.agency, this.stage, this.requirements);
 		
-		System.out.println("Pauseta round: " + this.round + " stage: " + this.stage);
-		System.out.println(cb.toString());
-
 		//Update the highest value
 		boolean improved = this.pauseta.updatePreviousHighestValue(cb.getValue());
 		

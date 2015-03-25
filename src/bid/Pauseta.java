@@ -47,11 +47,11 @@ public class Pauseta implements Serializable{
 		this.bidComparator  = new Comparator<Bid>(){
 			public int compare(Bid b1, Bid b2){
 
-				if(Math.sqrt(b1.value/b1.resources.size()) > Math.sqrt(b2.value/b2.resources.size()))
-					return 1;
-
-				if(Math.sqrt(b1.value/b1.resources.size()) < Math.sqrt(b2.value/b2.resources.size()))
+				if(b1.value/Math.sqrt(b1.resources.size()) > b2.value/Math.sqrt(b2.resources.size()))
 					return -1;
+
+				if(b1.value/Math.sqrt(b1.resources.size()) < b2.value/Math.sqrt(b2.resources.size()))
+					return 1;
 
 				return 0;
 			}};
@@ -71,11 +71,11 @@ public class Pauseta implements Serializable{
 		this.bidComparator  = new Comparator<Bid>(){
 			public int compare(Bid b1, Bid b2){
 
-				if(Math.sqrt(b1.value/b1.resources.size()) > Math.sqrt(b2.value/b2.resources.size()))
-					return 1;
-
-				if(Math.sqrt(b1.value/b1.resources.size()) < Math.sqrt(b2.value/b2.resources.size()))
+				if(b1.value/Math.sqrt(b1.resources.size()) > b2.value/Math.sqrt(b2.resources.size()))
 					return -1;
+
+				if(b1.value/Math.sqrt(b1.resources.size()) < b2.value/Math.sqrt(b2.resources.size()))
+					return 1;
 
 				return 0;
 			}};
@@ -164,6 +164,7 @@ public class Pauseta implements Serializable{
 		//CompleteBid to be returned, g in the original paper
 		CompleteBid result = new CompleteBid();
 
+		//I have no bids to use in this stage
 		if(myBids.isEmpty()){
 
 			return result;
@@ -173,8 +174,9 @@ public class Pauseta implements Serializable{
 		bids = new ArrayList<Bid>(theirBids);
 		bids.addAll(myBids);
 
+		//Sort the bids
 		Collections.sort(bids, bidComparator);
-
+		
 		while(!bids.isEmpty()){
 
 			Bid currentBid = bids.get(0);
@@ -198,6 +200,11 @@ public class Pauseta implements Serializable{
 
 				//Check if all the resource types in the currentBid are required
 				add &= requirement.requirements.containsKey(r.type);
+				
+				if(!add){
+					
+					break;
+				}
 
 				//Count how many of each resource type are there in the currentBid
 				Integer value  = counter.get(r.type);
@@ -233,7 +240,6 @@ public class Pauseta implements Serializable{
 				
 				for(String key: keys){
 
-					//System.out.println("Key: " + key + " Value: " + counter.get(key) + " req: " + requirement.requirements.get(key));
 					add &= (counter.get(key) <= requirement.requirements.get(key));
 				}
 			}
@@ -244,6 +250,22 @@ public class Pauseta implements Serializable{
 
 				result.addBid(currentBid);
 				idsUsed.add(currentBid.id);
+			}
+			
+			//Check if the requirements have already been fulfilled.
+			//Count the number of resources needed
+			int neededResources = 0;
+			Set<String> keys = requirement.requirements.keySet();
+			
+			for(String k: keys){
+				
+				neededResources += requirement.requirements.get(k);
+			}
+			
+			
+			if(result.getResources().size() == neededResources){
+				
+				break;
 			}
 		}
 		

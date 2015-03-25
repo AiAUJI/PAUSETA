@@ -15,6 +15,7 @@ import needAGoodName.Requirement;
 import needAGoodName.Resource;
 import bid.Pauseta;
 import jade.core.Agent;
+import jadeBehaviours.PAUSETARegisterBehaviour;
 
 
 public class PAUSETABeggyAgent extends Agent{
@@ -88,7 +89,7 @@ public class PAUSETABeggyAgent extends Agent{
 					
 					if(i != 1){
 						
-						beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, value + SYNERGY));
+						beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, value + SYNERGY * s.size()));
 					}else{
 						
 						beggySynergyList.add(new Bid(new ArrayList<Resource>(s), beggyAgency, value));

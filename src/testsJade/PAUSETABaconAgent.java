@@ -15,6 +15,7 @@ import needAGoodName.Requirement;
 import needAGoodName.Resource;
 import bid.Pauseta;
 import jade.core.Agent;
+import jadeBehaviours.PAUSETARegisterBehaviour;
 
 
 public class PAUSETABaconAgent extends Agent{
@@ -88,7 +89,7 @@ public class PAUSETABaconAgent extends Agent{
 				
 					if(i != 1){
 						
-						baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, value + SYNERGY));
+						baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, value + SYNERGY * s.size()));
 					}else{
 						
 						baconSynergyList.add(new Bid(new ArrayList<Resource>(s), baconAgency, value));

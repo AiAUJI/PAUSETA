@@ -1,4 +1,4 @@
-package testsJade;
+package jadeBehaviours;
 
 
 import needAGoodName.Agency;

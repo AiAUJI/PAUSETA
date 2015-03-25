@@ -1,4 +1,4 @@
-package testsJade;
+package jadeBehaviours;
 
 
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 	private int round;
 	private Pauseta pauseta;
 	private Requirement requirements;
-	private boolean done;
 	private List<ACLMessage> messages;
+	private boolean done;
 
 	public PAUSETAReceiveBehaviour(Agent agent, Agency agency, Pauseta pauseta, Requirement requirements, int stage, int round){
 
@@ -36,36 +36,35 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 		this.agency = agency;
 		this.pauseta = pauseta;
 		this.requirements = requirements;
-		this.done = false;
 		this.messages = new ArrayList<ACLMessage>();
 		this.stage = stage;
 		this.round = round;
+		this.done = false;
 	}
 
 	@Override
 	public void action() {
-
-		//Receive other CompleteBids
-		//ACLMessage cbToReceive = this.agent.receive();
-		MessageTemplate template = MessageTemplate.MatchOntology(this.stage + "#" + this.round );
 		
-		ACLMessage cbToReceive = this.agent.blockingReceive(template, TIMEOUT);
+		//Receive other CompleteBids
+		MessageTemplate template = MessageTemplate.MatchOntology(this.stage + "#" + this.round );
+
+		ACLMessage receivedMessage = this.agent.blockingReceive(template, TIMEOUT);
 
 		CompleteBid response = null;
 
 		//I have received a message
-		if(cbToReceive != null){
+		if(receivedMessage != null){
 
-			this.messages.add(cbToReceive);
-			
+			this.messages.add(receivedMessage);
+
 			//Keep trying to receive
 			block(TIMEOUT);
 
 		}else if(this.messages.size() > 0){ //TIMEOUT milliseconds have passed without messages, we assume no one is sending messages for this.stage and this.round
-						
+
 			//We now process all received messages (if any)
 			for(ACLMessage msg: this.messages){
-				
+
 				try {
 
 					response = (CompleteBid) msg.getContentObject();
@@ -74,30 +73,48 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 					System.out.println("Error receiving the object.");
 					e.printStackTrace();
 				}
-				
+
 				//This is only because we had to initialize response to something  
 				if(response != null){
 
 					System.out.println("I am " + this.agent.getLocalName() + " and " + msg.getSender().getLocalName() + " has sent me this: ");
 					System.out.println(response.toString());
-					
+
 					this.pauseta.updatePreviousHighestValue(response.value);
 
 					//Add CompleteBid to the SAB
 					this.pauseta.addCompleteBidToSAB(response);
 				}
 			}
-			
+
 			//We are done processing, continue with the next round
-			this.agent.addBehaviour(new PAUSETASendBehaviour(this.agent, this.agency, this.pauseta, this.requirements, this.stage, this.round + 1));
-			
-			System.out.println("Round " + this.round + " ended");
+			//During the first stage there are no rounds
+			if(this.requirements.requirements.size() != this.stage){
+				if(this.stage == 1){
+
+					this.agent.addBehaviour(new PAUSETASendBehaviour(this.agent, this.agency, this.pauseta, this.requirements, this.stage + 1, 0));
+				}else{
+
+					this.agent.addBehaviour(new PAUSETASendBehaviour(this.agent, this.agency, this.pauseta, this.requirements, this.stage, this.round + 1));
+				}
+			}else{ //Deregister the agent from the "Yellow pages"
+				
+				this.agent.addBehaviour(new PAUSETADeregisterBehaviour(this.agent));
+			}
 
 			this.done = true;
+
 		}else{ //We have not received any message, this stage has ended
+
+			if(this.requirements.requirements.size() != this.stage){
+
+				this.agent.addBehaviour(new PAUSETASendBehaviour(this.agent, this.agency, this.pauseta, this.requirements, this.stage + 1, 0));
+			}else{//Deregister the agent from the "Yellow pages"
+				
+				this.agent.addBehaviour(new PAUSETADeregisterBehaviour(this.agent));
+			}
 			
-			System.out.println("Next stage");
-			this.agent.addBehaviour(new PAUSETASendBehaviour(this.agent, this.agency, this.pauseta, this.requirements, this.stage + 1, 0));
+			this.done = true;
 		}
 	}
 
