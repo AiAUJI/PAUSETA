@@ -5,7 +5,10 @@ import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 
-
+/**
+ * Deregisters a bidder from the yellow pages.
+ *
+ */
 public class PAUSETADeregisterBehaviour extends Behaviour{
 
 	private static final long serialVersionUID = 6735239536403249351L;

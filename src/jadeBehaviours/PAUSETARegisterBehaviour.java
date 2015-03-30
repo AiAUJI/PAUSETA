@@ -11,6 +11,11 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
+/**
+ * This behaviour registers a bidder in the yellow pages, then
+ * proceeds to the SendBehaviour.
+ *
+ */
 public class PAUSETARegisterBehaviour extends Behaviour{
 
 	private static final long serialVersionUID = 6735239536403249351L;

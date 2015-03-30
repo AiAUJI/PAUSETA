@@ -14,6 +14,12 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 
+/**
+ * This behaviour collects all the messages of the interested parties, adds their bids
+ * to the SAB and iterates through rounds and stages. If there are still stages left, it
+ * proceeds to the SendBehaviour.
+ *
+ */
 public class PAUSETAReceiveBehaviour extends Behaviour{
 
 	private static final long serialVersionUID = 6735239536403249351L;

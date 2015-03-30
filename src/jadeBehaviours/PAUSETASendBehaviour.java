@@ -16,6 +16,12 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
+/**
+ * This behaviour computes the PAUSETA algorithm for each round of each step,
+ * then if the value is bigger than the previous maximum, it broadcasts the
+ * CompleteBid. Then proceeds to the ReceiveBehaviour.
+ *
+ */
 public class PAUSETASendBehaviour extends Behaviour{
 
 	private static final long serialVersionUID = 6735239536403249351L;
