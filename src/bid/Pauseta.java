@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -24,10 +25,10 @@ public class Pauseta implements Serializable{
 	private static final long serialVersionUID = -2359527997110629812L;
 
 	//Array to hold the Set Of All Bids
-	public ArrayList<Bid> SAB;
+	public List<Bid> SAB;
 
 	//Array to hold my bids
-	private ArrayList<Bid> myOwnPrivateBids;
+	private List<Bid> myOwnPrivateBids;
 	
 	//Variable to hold previous highest value
 	private double previousHighestValue;
@@ -60,12 +61,12 @@ public class Pauseta implements Serializable{
 	/**
 	 * Constructor.
 	 * 
-	 * @param myOwnPrivateBids Private bids taking in count the synergy.
+	 * @param synergyList Private bids taking in count the synergy.
 	 */
-	public Pauseta(ArrayList<Bid> myOwnPrivateBids){
+	public Pauseta(List<Bid> synergyList){
 
 		this.SAB = new ArrayList<Bid>();
-		this.myOwnPrivateBids = myOwnPrivateBids;
+		this.myOwnPrivateBids = synergyList;
 		this.previousHighestValue = -1.0;
 
 		this.bidComparator  = new Comparator<Bid>(){

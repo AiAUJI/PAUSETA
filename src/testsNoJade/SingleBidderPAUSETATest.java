@@ -12,6 +12,7 @@ import enviroment.Location;
 import needAGoodName.Agency;
 import needAGoodName.Bid;
 import needAGoodName.CompleteBid;
+import needAGoodName.OrderedPowerSet;
 import needAGoodName.Requirement;
 import needAGoodName.Resource;
 

@@ -1,4 +1,4 @@
-package testsNoJade;
+package needAGoodName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
