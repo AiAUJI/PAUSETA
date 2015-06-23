@@ -11,19 +11,27 @@ public class Intersection implements Serializable{
 
 	private static final long serialVersionUID = 3885620456847709732L;
 
+	//Unique id
+	public String id;
+	
 	//In segments
 	public ArrayList<Segment> in;
 	
 	//Out segments
 	public ArrayList<Segment> out;
 	
+	//Coordinates
+	public double[] coordinates;
+	
 	/**
 	 * Default constructor. 
 	 */
 	public Intersection(){
 		
+		this.id = "";
 		this.in = new ArrayList<Segment>();
 		this.out = new ArrayList<Segment>();
+		this.coordinates = new double[2];
 	}
 	
 	/**
@@ -31,11 +39,30 @@ public class Intersection implements Serializable{
 	 *
 	 * @param  in   A list of {@link Segment} that go into this intersection.
 	 * @param  out  A list of {@link Segment} that leave this intersection.
+	 * @param coordinates A array with the coordinates.
 	 */
-	public Intersection(ArrayList<Segment> in, ArrayList<Segment> out){
+	public Intersection(String id, ArrayList<Segment> in, ArrayList<Segment> out, double[] coordinates){
 		
+		this.id = id;
 		this.in = in;
 		this.out = out;
+		this.coordinates = coordinates;
+	}
+	
+	/**
+	 * Constructor. 
+	 *
+	 * @param  in   A list of {@link Segment} that go into this intersection.
+	 * @param  out  A list of {@link Segment} that leave this intersection.
+	 * @param longitude A double with the longitude.
+	 * @param latitude A double with the latitude.
+	 */
+	public Intersection(String id, double latitude, double longitude){
+		
+		this.id = id;
+		this.in = new ArrayList<Segment>();
+		this.out = new ArrayList<Segment>();
+		this.coordinates = new double[]{longitude, latitude};
 	}
 	
 	/**

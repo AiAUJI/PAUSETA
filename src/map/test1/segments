@@ -1,0 +1,90 @@
+{"id": "S-A7-01", "origin": "null", "destination": "I-08", "length": 4.4}
+{"id": "S-A7-02", "origin": "I-08", "destination": "null", "length": 4.4}
+{"id": "S-CV10-01", "origin": "I-07", "destination": "I-06", "length": 8.2}
+{"id": "S-CV10-02", "origin": "I-06", "destination": "I-07", "length": 8.2}
+{"id": "S-CV10-03", "origin": "I-06", "destination": "I-05", "length": 2.9}
+{"id": "S-CV10-04", "origin": "I-05", "destination": "I-06", "length": 2.9}
+{"id": "S-CV10-05", "origin": "I-05", "destination": "I-04", "length": 7}
+{"id": "S-CV10-06", "origin": "I-04", "destination": "I-05", "length": 7}
+{"id": "S-CV10-07", "origin": "I-04", "destination": "I-03", "length": 1.9}
+{"id": "S-CV10-08", "origin": "I-03", "destination": "I-04", "length": 1.9}
+{"id": "S-CV10-09", "origin": "I-03", "destination": "I-02", "length": 2.1}
+{"id": "S-CV10-10", "origin": "I-02", "destination": "I-03", "length": 2.1}
+{"id": "S-CV10-10", "origin": "I-02", "destination": "I-01", "length": 4.2}
+{"id": "S-CV10-11", "origin": "I-01", "destination": "I-02", "length": 4.2}
+{"id": "S-CV151-01", "origin": "I-02", "destination": "I-13", "length": 1.9}
+{"id": "S-CV151-02", "origin": "I-13", "destination": "I-02", "length": 1.9}
+{"id": "S-N340-01", "origin": "I-13", "destination": "I-12", "length": 2.5}
+{"id": "S-N340-02", "origin": "I-13", "destination": "I-12", "length": 2.5}
+{"id": "S-CV16-01", "origin": "I-03", "destination": "I-12", "length": 2.4}
+{"id": "S-CV16-02", "origin": "I-12", "destination": "I-03", "length": 2.4}
+{"id": "S-N340-03", "origin": "I-12", "destination": "I-16", "length": 1}
+{"id": "S-N340-04", "origin": "I-16", "destination": "I-12", "length": 1}
+{"id": "S-CV17-03", "origin": "I-04", "destination": "I-16", "length": 3.5}
+{"id": "S-CV17-04", "origin": "I-16", "destination": "I-04", "length": 3.5}
+{"id": "S-AP7-01", "origin": "I-11", "destination": "I-16", "length": 0.55}
+{"id": "S-AP7-02", "origin": "I-16", "destination": "I-11", "length": 0.55}
+{"id": "S-CV20-01", "origin": "I-11", "destination": "I-15", "length": 7.3}
+{"id": "S-CV20-02", "origin": "I-15", "destination": "I-11", "length": 7.3}
+{"id": "S-E15-01", "origin": "I-15", "destination": "I-14", "length": 4.5}
+{"id": "S-E15-02", "origin": "I-14", "destination": "I-15", "length": 4.5}
+{"id": "S-CV144-01", "origin": "I-15", "destination": "I-30", "length": 4.8}
+{"id": "S-CV144-02", "origin": "I-30", "destination": "I-15", "length": 4.8}
+{"id": "S-CV20-03", "origin": "I-11", "destination": "I-10", "length": 11}
+{"id": "S-CV20-04", "origin": "I-10", "destination": "I-11", "length": 11}
+{"id": "S-E15-03", "origin": "I-10", "destination": "I-21", "length": 7.7}
+{"id": "S-E15-04", "origin": "I-21", "destination": "I-10", "length": 7.7}
+{"id": "S-CV222-01", "origin": "I-10", "destination": "I-20", "length": 1.1}
+{"id": "S-CV222-02", "origin": "I-20", "destination": "I-10", "length": 1.1}
+{"id": "S-N340-05", "origin": "I-09", "destination": "I-20", "length": 4.2}
+{"id": "S-N340-06", "origin": "I-20", "destination": "I-09", "length": 4.2}
+{"id": "S-N340-07", "origin": "I-07", "destination": "I-09", "length": 2.7}
+{"id": "S-N340-08", "origin": "I-09", "destination": "I-07", "length": 2.7}
+{"id": "S-CV18-01", "origin": "I-09", "destination": "I-22", "length": 7.6}
+{"id": "S-CV18-02", "origin": "I-22", "destination": "I-09", "length": 7.6}
+{"id": "S-N340-09", "origin": "I-20", "destination": "I-19", "length": 2.9}
+{"id": "S-N340-10", "origin": "I-19", "destination": "I-20", "length": 2.9}
+{"id": "S-N340-11", "origin": "I-19", "destination": "I-18", "length": 3.2}
+{"id": "S-N340-12", "origin": "I-18", "destination": "I-19", "length": 3.2}
+{"id": "S-N340-13", "origin": "I-18", "destination": "I-17", "length": 2.5}
+{"id": "S-N340-14", "origin": "I-17", "destination": "I-18", "length": 2.5}
+{"id": "S-N340-15", "origin": "I-17", "destination": "I-16", "length": 2}
+{"id": "S-N340-16", "origin": "I-16", "destination": "I-17", "length": 2}
+{"id": "S-CS22-01", "origin": "I-17", "destination": "I-24", "length": 1.4}
+{"id": "S-CS22-02", "origin": "I-24", "destination": "I-17", "length": 1.4}
+{"id": "S-N340A-01", "origin": "I-18", "destination": "I-24", "length": 2.7}
+{"id": "S-N340A-02", "origin": "I-24", "destination": "I-18", "length": 2.7}
+{"id": "S-CV18-03", "origin": "I-24", "destination": "I-25", "length": 1.2}
+{"id": "S-CV18-04", "origin": "I-25", "destination": "I-24", "length": 1.2}
+{"id": "S-CV18-05", "origin": "I-25", "destination": "I-23", "length": 2.6}
+{"id": "S-CV18-06", "origin": "I-23", "destination": "I-25", "length": 2.6}
+{"id": "S-CV18-07", "origin": "I-23", "destination": "I-22", "length": 6.3}
+{"id": "S-CV18-08", "origin": "I-22", "destination": "I-23", "length": 6.3}
+{"id": "S-CS22-03", "origin": "I-25", "destination": "I-26", "length": 2.2}
+{"id": "S-CS22-04", "origin": "I-26", "destination": "I-25", "length": 2.2}
+{"id": "S-CV183-01", "origin": "I-26", "destination": "I-23", "length": 2.5}
+{"id": "S-CV183-02", "origin": "I-23", "destination": "I-26", "length": 2.5}
+{"id": "S-CS22-05", "origin": "I-28", "destination": "I-26", "length": 1.9}
+{"id": "S-CS22-06", "origin": "I-26", "destination": "I-28", "length": 1.9}
+{"id": "S-CS22-07", "origin": "I-28", "destination": "I-29", "length": 4.5}
+{"id": "S-CS22-08", "origin": "I-29", "destination": "I-28", "length": 4.5}
+{"id": "S-CalleSerradal-01", "origin": "I-26", "destination": "I-27", "length": 1.5}
+{"id": "S-CalleSerradal-02", "origin": "I-27", "destination": "I-26", "length": 1.5}
+{"id": "S-Almafara-01", "origin": "I-28", "destination": "I-27", "length": 1.1}
+{"id": "S-Almafara-02", "origin": "I-27", "destination": "I-28", "length": 1.1}
+{"id": "S-CalleSerradal-03", "origin": "I-29", "destination": "I-27", "length": 3.1}
+{"id": "S-CalleSerradal-04", "origin": "I-27", "destination": "I-29", "length": 3.1}
+{"id": "S-Provincial-01", "origin": "Hospital provincial", "destination": "I-24", "length": 2.56}
+{"id": "S-Provincial-02", "origin": "Hospital provincial", "destination": "Hospital general", "length": 1.94}
+{"id": "S-General-01", "origin": "Hospital general", "destination": "Bomberos 1", "length": 0.57}
+{"id": "S-General-02", "origin": "Hospital general", "destination": "Hospital Rey Don Jaime", "length": 0.73}
+{"id": "S-General-03", "origin": "Hospital general", "destination": "I-16", "length": 4.35}
+{"id": "S-General-04", "origin": "Hospital general", "destination": "Hospital provincial", "length": 1.94}
+{"id": "S-DonJaime-01", "origin": "Hospital Rey Don Jaime", "destination": "Hospital general", "length": 0.73}	
+{"id": "S-DonJaime-02", "origin": "Hospital Rey Don Jaime", "destination": "Hospital provincial", "length": 1.52}
+{"id": "S-DonJaime-03", "origin": "Hospital Rey Don Jaime", "destination": "I-28", "length": 3.67}
+{"id": "S-Bomberos1-01", "origin": "Bomberos 1", "destination": "I-15", "length": 2.37}
+{"id": "S-Bomberos1-02", "origin": "Bomberos 1", "destination": "Hospital general", "length": 0.57}
+{"id": "S-Bomberos2-01", "origin": "Bomberos 2", "destination": "I-24", "length": 0.8}
+{"id": "S-Gruas1-01", "origin": "Gruas 1", "destination": "Bomberos 1", "length": 1}
+{"id": "S-Gruas2-01", "origin": "Gruas 2", "destination": "I-25", "length": 0.2}

@@ -10,6 +10,9 @@ public class Segment implements Serializable{
 
 	private static final long serialVersionUID = -6853406084306746147L;
 
+	//Unique id
+	public String id;
+	
 	//Where the segment is accessed from
 	public Intersection origin;
 	
@@ -19,12 +22,12 @@ public class Segment implements Serializable{
 	//Length in kilometers of the segment
 	public double length;
 	
-	
 	/**
 	 * Default constructor. 
 	 */
 	public Segment(){
 		
+		this.id = "";
 		this.origin = new Intersection();
 		this.destination = new Intersection();
 		this.length = 0.0;
@@ -37,8 +40,9 @@ public class Segment implements Serializable{
 	 * @param  destination {@link Intersection} where this {@link Segment} ends.
 	 * @param  length The length of this {@link Segment} in Km.
 	 */
-	public Segment(Intersection origin, Intersection destination, double length){
+	public Segment(String id, Intersection origin, Intersection destination, double length){
 		
+		this.id = id;
 		this.origin = origin;
 		this.destination = destination;
 		this.length = length;

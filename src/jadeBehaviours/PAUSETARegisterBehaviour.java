@@ -70,5 +70,4 @@ public class PAUSETARegisterBehaviour extends Behaviour{
 
 		return true;
 	}
-
 }

@@ -55,5 +55,4 @@ public class Resource implements Serializable{
 		this.location = location;
 		this.value = value;
 	}
-	
 }
