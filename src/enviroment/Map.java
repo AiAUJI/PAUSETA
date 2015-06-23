@@ -266,7 +266,7 @@ public class Map {
 		return ret;
 	}
 
-	private Intersection getIntersectionByID(String id){
+	public Intersection getIntersectionByID(String id){
 
 		Intersection ret = null;
 

@@ -1,4 +1,4 @@
-package bookTests;
+package bookTest1;
 
 import java.io.IOException;
 import java.util.HashMap;

@@ -37,13 +37,12 @@ public class PAUSETARegisterBehaviour extends Behaviour{
 	private Map map;
 	private boolean done;
 
-	public PAUSETARegisterBehaviour(Agent agent, Agency agency, Pauseta pauseta, int stage, int round, Map map){
+	public PAUSETARegisterBehaviour(Agent agent, Agency agency, int stage, int round, Map map){
 
 		super();
 
 		this.agent = agent;
 		this.agency = agency;
-		this.pauseta = pauseta;
 		this.stage = stage;
 		this.round = round;
 		this.done = false;
