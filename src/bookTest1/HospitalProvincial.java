@@ -3,19 +3,21 @@ package bookTest1;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import agentExtension.AgentWithCounter;
 import needAGoodName.Agency;
 import needAGoodName.Resource;
 import enviroment.Location;
 import enviroment.Map;
-import jade.core.Agent;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class HospitalGeneralAgent extends Agent {
+public class HospitalProvincial extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
 	protected void setup(){
 		
+		this.numberOfMessages = 0;
+				
 		Map map = null;
 
 		try {
@@ -28,10 +30,10 @@ public class HospitalGeneralAgent extends Agent {
 		}
 		
 		Location location = new Location();
-		location.segment = map.getIntersectionByID("Hospital general").out.get(0);
+		location.segment = map.getIntersectionByID("Hospital provincial").out.get(0);
 		location.position = 0;
 		
-		Agency agency = new Agency("Hospital general", "Descripcion hospital", "Hospital", location, new ArrayList<Resource>());
+		Agency agency = new Agency("Hospital provincial", "Descripcion hospital", "Hospital", location, new ArrayList<Resource>());
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();

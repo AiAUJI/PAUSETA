@@ -75,16 +75,23 @@
 {"id": "S-CalleSerradal-03", "origin": "I-29", "destination": "I-27", "length": 3.1}
 {"id": "S-CalleSerradal-04", "origin": "I-27", "destination": "I-29", "length": 3.1}
 {"id": "S-Provincial-01", "origin": "Hospital provincial", "destination": "I-24", "length": 2.56}
-{"id": "S-Provincial-02", "origin": "Hospital provincial", "destination": "Hospital general", "length": 1.94}
+{"id": "S-Provincial-02", "origin": "I-24", "destination": "Hospital provincial", "length": 2.56}
+{"id": "S-Provincial-03", "origin": "Hospital provincial", "destination": "Hospital general", "length": 1.94}
 {"id": "S-General-01", "origin": "Hospital general", "destination": "Bomberos 1", "length": 0.57}
 {"id": "S-General-02", "origin": "Hospital general", "destination": "Hospital Rey Don Jaime", "length": 0.73}
 {"id": "S-General-03", "origin": "Hospital general", "destination": "I-16", "length": 4.35}
-{"id": "S-General-04", "origin": "Hospital general", "destination": "Hospital provincial", "length": 1.94}
+{"id": "S-General-04", "origin": "I-16", "destination": "Hospital general", "length": 4.35}
+{"id": "S-General-05", "origin": "Hospital general", "destination": "Hospital provincial", "length": 1.94}
 {"id": "S-DonJaime-01", "origin": "Hospital Rey Don Jaime", "destination": "Hospital general", "length": 0.73}	
 {"id": "S-DonJaime-02", "origin": "Hospital Rey Don Jaime", "destination": "Hospital provincial", "length": 1.52}
 {"id": "S-DonJaime-03", "origin": "Hospital Rey Don Jaime", "destination": "I-28", "length": 3.67}
+{"id": "S-DonJaime-04", "origin": "I-28", "destination": "Hospital Rey Don Jaime", "length": 3.67}
 {"id": "S-Bomberos1-01", "origin": "Bomberos 1", "destination": "I-15", "length": 2.37}
-{"id": "S-Bomberos1-02", "origin": "Bomberos 1", "destination": "Hospital general", "length": 0.57}
+{"id": "S-Bomberos1-02", "origin": "I-15", "destination": "Bomberos 1", "length": 2.37}
+{"id": "S-Bomberos1-03", "origin": "Bomberos 1", "destination": "Hospital general", "length": 0.57}
+{"id": "S-Bomberos1-03", "origin": "Bomberos 1", "destination": "Gruas 1", "length": 0.57}
 {"id": "S-Bomberos2-01", "origin": "Bomberos 2", "destination": "I-24", "length": 0.8}
+{"id": "S-Bomberos2-02", "origin": "I-24", "destination": "Bomberos 2", "length": 0.8}
 {"id": "S-Gruas1-01", "origin": "Gruas 1", "destination": "Bomberos 1", "length": 1}
 {"id": "S-Gruas2-01", "origin": "Gruas 2", "destination": "I-25", "length": 0.2}
+{"id": "S-Gruas2-02", "origin": "I-25", "destination": "Gruas 2", "length": 0.2}

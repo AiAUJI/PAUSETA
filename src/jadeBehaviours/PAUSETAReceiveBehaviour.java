@@ -7,8 +7,8 @@ import java.util.List;
 import needAGoodName.Agency;
 import needAGoodName.CompleteBid;
 import needAGoodName.Requirement;
+import agentExtension.AgentWithCounter;
 import bid.Pauseta;
-import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -25,7 +25,7 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 	private static final long serialVersionUID = 6735239536403249351L;
 	private static final long TIMEOUT = 500L;
 
-	private Agent agent;
+	private AgentWithCounter agent;
 	private Agency agency;
 	private int stage;
 	private int round;
@@ -34,7 +34,7 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 	private List<ACLMessage> messages;
 	private boolean done;
 
-	public PAUSETAReceiveBehaviour(Agent agent, Agency agency, Pauseta pauseta, Requirement requirements, int stage, int round){
+	public PAUSETAReceiveBehaviour(AgentWithCounter agent, Agency agency, Pauseta pauseta, Requirement requirements, int stage, int round){
 
 		super();
 

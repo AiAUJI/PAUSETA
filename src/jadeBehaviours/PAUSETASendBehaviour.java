@@ -6,9 +6,9 @@ import java.util.Vector;
 import needAGoodName.Agency;
 import needAGoodName.CompleteBid;
 import needAGoodName.Requirement;
+import agentExtension.AgentWithCounter;
 import bid.Pauseta;
 import jade.core.AID;
-import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -26,14 +26,14 @@ public class PAUSETASendBehaviour extends Behaviour{
 
 	private static final long serialVersionUID = 6735239536403249351L;
 
-	private Agent agent;
+	private AgentWithCounter agent;
 	private Agency agency;
 	private int stage;
 	private int round;
 	private Pauseta pauseta;
 	private Requirement requirements;
 
-	public PAUSETASendBehaviour(Agent agent, Agency agency, Pauseta pauseta, Requirement requirements, int stage, int round){
+	public PAUSETASendBehaviour(AgentWithCounter agent, Agency agency, Pauseta pauseta, Requirement requirements, int stage, int round){
 
 		super();
 
@@ -102,8 +102,12 @@ public class PAUSETASendBehaviour extends Behaviour{
 			for(AID aid: bidderAgents){
 				
 				//Check so I don't send it to myself
-				if(!aid.getLocalName().equals(this.agent.getAID().getLocalName()))
+				if(!aid.getLocalName().equals(this.agent.getAID().getLocalName())){
+					
 					cbToSend.addReceiver(aid);
+					this.agent.numberOfMessages++;
+				}
+
 			}
 			
 			//Actually send it

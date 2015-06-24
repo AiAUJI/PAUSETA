@@ -8,8 +8,8 @@ import needAGoodName.Agency;
 import needAGoodName.Bid;
 import needAGoodName.TMP;
 import needAGoodName.UtilitiesAndSynergies;
+import agentExtension.AgentWithCounter;
 import bid.Pauseta;
-import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -28,7 +28,7 @@ public class PAUSETARegisterBehaviour extends Behaviour{
 
 	private static final long serialVersionUID = 6735239536403249351L;
 
-	private Agent agent;
+	private AgentWithCounter agent;
 	private Agency agency;
 	private int stage;
 	private int round;
@@ -37,7 +37,7 @@ public class PAUSETARegisterBehaviour extends Behaviour{
 	private Map map;
 	private boolean done;
 
-	public PAUSETARegisterBehaviour(Agent agent, Agency agency, int stage, int round, Map map){
+	public PAUSETARegisterBehaviour(AgentWithCounter agent, Agency agency, int stage, int round, Map map){
 
 		super();
 

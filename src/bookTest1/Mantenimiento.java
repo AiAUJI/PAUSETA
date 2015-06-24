@@ -3,19 +3,21 @@ package bookTest1;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import agentExtension.AgentWithCounter;
 import needAGoodName.Agency;
 import needAGoodName.Resource;
 import enviroment.Location;
 import enviroment.Map;
-import jade.core.Agent;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class Mantenimiento extends Agent {
+public class Mantenimiento extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
 	protected void setup(){
 		
+		this.numberOfMessages = 0;
+				
 		Map map = null;
 
 		try {

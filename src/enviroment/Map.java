@@ -311,7 +311,7 @@ public class Map {
 	public String getRandomIntersection(){
 		
 		Random rand = new Random();
-		int randomNum = rand.nextInt(this.intersectionCount+ 1);
+		int randomNum = rand.nextInt(this.intersectionCount);
 		
 		return this.intersections.get(randomNum).id;
 	}

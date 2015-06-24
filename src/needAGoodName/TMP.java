@@ -16,7 +16,9 @@ public class TMP implements Serializable{
 	 * Auxiliar class
 	 *
 	 */
-	public class Triple{
+	public class Triple implements Serializable{
+		
+		private static final long serialVersionUID = -3760283759552267737L;
 		
 		public String resource;
 		public int quantity;

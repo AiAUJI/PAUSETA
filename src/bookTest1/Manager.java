@@ -1,15 +1,17 @@
 package bookTest1;
 
+import agentExtension.AgentWithCounter;
 import needAGoodName.TMP;
-import jade.core.Agent;
 import jadeBehaviours.PAUSETAManagerBehaviour;
 
-public class Manager extends Agent{
+public class Manager extends AgentWithCounter {
 
 	private static final long serialVersionUID = 7426586151076550534L;
 
 	protected void setup(){
 		
+		this.numberOfMessages = 0;
+				
 		TMP tmp = new TMP();
 
 		//Incident in the CV-10
@@ -18,7 +20,7 @@ public class Manager extends Agent{
 		tmp.addResource("Grua normal", 2, "I-03");
 		tmp.addResource("Unidad de mantenimiento", 2, "I-03");
 		tmp.addResource("Ambulancia atencion urgente", 1, "I-03");
-		tmp.addResource("Ambulancia de ayuda y evacuacion", 1, "I-03");
+		tmp.addResource("Ambulancia de ayuda y evacuacion", 3, "I-03");
 		tmp.addResource("Medico", 3, "I-03");
 		tmp.addResource("Unidad de policia", 1, "I-02");
 		tmp.addResource("Unidad de policia", 1, "I-03");
