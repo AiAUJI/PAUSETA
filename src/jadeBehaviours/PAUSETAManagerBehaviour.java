@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Vector;
 
 import agentExtension.AgentWithCounter;
+import needAGoodName.Resource;
 import needAGoodName.TMP;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -14,6 +15,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 
 public class PAUSETAManagerBehaviour extends Behaviour{
 
@@ -101,8 +103,9 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 		//Measure time
 		startTime = System.currentTimeMillis();
 		
-		//Gather the total number of messages sent
+		//Gather the total number of messages sent and the resources used
 		List<ACLMessage> messages = new ArrayList<ACLMessage>();
+		List<Resource> resources = new ArrayList<Resource>();
 		
 		ACLMessage receivedMessage = this.agent.blockingReceive(15000L);
 
@@ -114,15 +117,33 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 			//Keep trying to receive
 			block(500L);		
-		} else if(messages.size() > 0) {
+		} else if(messages.size() > 0) { //We have received everything
 			
 			for(ACLMessage msg: messages){
 				
-				this.agent.numberOfMessages += Integer.parseInt(msg.getOntology());
+				if(msg.getOntology().equals("Resources")){
+					
+					try {
+						
+						@SuppressWarnings("unchecked")
+						List<Resource> aux = (List<Resource>) msg.getContentObject();
+						
+						resources.addAll(aux);
+						
+					} catch (UnreadableException e) {
+						
+						System.out.println("Error getting the resources.");
+						e.printStackTrace();
+					}
+				} else {
+					
+					this.agent.numberOfMessages += Integer.parseInt(msg.getOntology());
+				}
 			}
 		}
 		
-		//Do SCP
+		//Evaluate SCP
+		
 		
 		//Write number of messages, SCP, PAUSETA, time
 		

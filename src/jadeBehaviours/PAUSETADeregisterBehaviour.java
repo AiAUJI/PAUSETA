@@ -1,5 +1,8 @@
 package jadeBehaviours;
 
+import java.io.IOException;
+
+import needAGoodName.Agency;
 import agentExtension.AgentWithCounter;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -16,12 +19,14 @@ public class PAUSETADeregisterBehaviour extends Behaviour{
 	private static final long serialVersionUID = 6735239536403249351L;
 
 	private AgentWithCounter agent;
+	private Agency agency;
 
-	public PAUSETADeregisterBehaviour(AgentWithCounter agent){
+	public PAUSETADeregisterBehaviour(AgentWithCounter agent, Agency agency){
 
 		super();
 
 		this.agent = agent;
+		this.agency = agency;
 	}
 
 	@Override
@@ -44,10 +49,24 @@ public class PAUSETADeregisterBehaviour extends Behaviour{
 		message.setOntology(Integer.toString(this.agent.numberOfMessages));
 
 		//Sets the agent to send by name
-		message.addReceiver( new AID( "Manager", AID.ISLOCALNAME) );
+		message.addReceiver(new AID( "Manager", AID.ISLOCALNAME));
 
 		//Actually send it
 		this.agent.send(message);
+		
+		//Send my list of Resources
+		message = new ACLMessage(ACLMessage.INFORM);
+		message.setOntology("Resources");
+		message.addReceiver(new AID( "Manager", AID.ISLOCALNAME));
+		
+		try {
+
+			message.setContentObject(agency.resources);
+		} catch (IOException e) {
+
+			System.out.println("Error trying to serialize the object.");
+			e.printStackTrace();
+		}
 	}
 
 	@Override

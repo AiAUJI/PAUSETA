@@ -105,7 +105,7 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 				}
 			}else{ //Deregister the agent from the "Yellow pages"
 				
-				this.agent.addBehaviour(new PAUSETADeregisterBehaviour(this.agent));
+				this.agent.addBehaviour(new PAUSETADeregisterBehaviour(this.agent, this.agency));
 			}
 
 			this.done = true;
@@ -117,7 +117,7 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 				this.agent.addBehaviour(new PAUSETASendBehaviour(this.agent, this.agency, this.pauseta, this.requirements, this.stage + 1, 0));
 			}else{//Deregister the agent from the "Yellow pages"
 				
-				this.agent.addBehaviour(new PAUSETADeregisterBehaviour(this.agent));
+				this.agent.addBehaviour(new PAUSETADeregisterBehaviour(this.agent, this.agency));
 			}
 			
 			this.done = true;
