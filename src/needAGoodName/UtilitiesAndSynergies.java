@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
-
-import com.google.common.collect.MinMaxPriorityQueue;
 
 import enviroment.Intersection;
 import enviroment.Map;
@@ -15,8 +14,9 @@ import needAGoodName.TMP.Triple;
 
 public class UtilitiesAndSynergies {
 	
-	public static final double BASEUTILITY = 100;
-	public static final double SYNERGY = 50;
+	public static final int BASEUTILITY = 1000;
+	public static final int SYNERGY = 50;
+	public static final int UNITINCREMENT = 100; 
 
 
 	public static List<Bid> setUtilitiesAndSynergies(Agency agency, TMP tmp, Map map){
@@ -26,7 +26,7 @@ public class UtilitiesAndSynergies {
 		HashMap<String, Integer> requirementsMap = tmp.requirementsMap.requirements;
 
 		//I need to evaluate dijkstra for every resource that is in the requirements (HashMapception)
-		HashMap<String, MinMaxPriorityQueue<Double>> distances = new HashMap<String, MinMaxPriorityQueue<Double>>();
+		HashMap<String, PriorityQueue<Double>> distances = new HashMap<String, PriorityQueue<Double>>();
 
 		for(Resource resource: resources){
 
@@ -46,7 +46,7 @@ public class UtilitiesAndSynergies {
 							distances.get(resource.type).add(dist);
 						}else{ //Create queue
 						
-							distances.put(resource.type, MinMaxPriorityQueue.create());
+							distances.put(resource.type, new PriorityQueue<Double>());
 							distances.get(resource.type).offer(dist);
 						}
 					}
@@ -57,17 +57,17 @@ public class UtilitiesAndSynergies {
 		//Now I have for every type of resource in the requirements, a list with its distances to the intersections it has to go (Sanity check)
 		//To compute the Utility value I will use the next formula (patent pending):
 		//
-		//		Type   |  Distances  | Utilities
+		//		Type   |  Distances   | Utilities
 		//  ------------------------------------
-		//	Fast car   | 2, 4, 6     | 99.67, 99.33, 99
-		//  Motorbike  | 3, 8        | 99.63, 99
+		//	Fast car   | 2, 4, 16     | 1299.998, 1299.996, 1299.984
+		//  Motorbike  | 3, 8         | 1199.997, 1199.992
 		//
-		// Utility[i] = BASEUTILITY - Distance[i]/DistanceMax //By rows
+		// UtilityType[i] = BASEUTILITY - Distance[i]/BASEUTILITY + UNITINCREMENT * numberOfElementsOfType(type)
 		
 		for(Resource resource: resources){
 			
-			resource.value = BASEUTILITY - distances.get(resource).peek()/distances.get(resource).peekLast();
-			distances.get(resource).removeFirst();
+			resource.value = BASEUTILITY - distances.get(resource).peek()/BASEUTILITY + UNITINCREMENT * distances.get(resource).size();
+			distances.get(resource).poll();
 		}
 		
 		//We have now all the Resources with their values
@@ -90,7 +90,6 @@ public class UtilitiesAndSynergies {
 				//of resource types, this way is "free".
 				
 				//Also get the total value
-				
 				Set<String> counter = new HashSet<String>();
 				boolean add = true;
 				double value = 0.0;

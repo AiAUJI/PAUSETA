@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -198,11 +199,25 @@ public class Map {
 	}
 
 
+	/**
+	 * Given the Dijkstra result, this returns the distance to a destination.
+	 * 
+	 * @param prev
+	 * @param destination
+	 * @return
+	 */
 	public double getDistance(HashMap<Intersection, Intersection> prev, String destination){
 		
 		return this.getDistance(prev, this.getIntersectionByID(destination));
 	}
 
+	/**
+	 * Same as above using Intersections instead of ID.
+	 * 
+	 * @param prev
+	 * @param destination
+	 * @return
+	 */
 	public double getDistance(HashMap<Intersection, Intersection> prev, Intersection destination){
 
 		//Get the path
@@ -266,6 +281,12 @@ public class Map {
 		return ret;
 	}
 
+	/**
+	 * Given the id of an intersection, it returns that intersection
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Intersection getIntersectionByID(String id){
 
 		Intersection ret = null;
@@ -280,5 +301,18 @@ public class Map {
 		}
 
 		return ret;
+	}
+	
+	/**
+	 * Returns a random valid intersection id
+	 * 
+	 * @return
+	 */
+	public String getRandomIntersection(){
+		
+		Random rand = new Random();
+		int randomNum = rand.nextInt(this.intersectionCount+ 1);
+		
+		return this.intersections.get(randomNum).id;
 	}
 }

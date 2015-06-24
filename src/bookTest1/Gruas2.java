@@ -10,7 +10,7 @@ import enviroment.Map;
 import jade.core.Agent;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class HospitalReyDonJaime extends Agent {
+public class Gruas2 extends Agent {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
@@ -28,20 +28,16 @@ public class HospitalReyDonJaime extends Agent {
 		}
 		
 		Location location = new Location();
-		location.segment = map.getIntersectionByID("Hospital Rey Don Jaime").out.get(0);
+		location.segment = map.getIntersectionByID("Gruas 2").out.get(0);
 		location.position = 0;
 		
-		Agency agency = new Agency("Hospital Rey Don Jaime", "Descripcion hospital", "Hospital", location, new ArrayList<Resource>());
+		Agency agency = new Agency("Gruas 2", "Descripcion gruas", "Gruas", location, new ArrayList<Resource>());
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
-		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia de ayuda y evacuacion", agency, location, 0));
-		resources.add(new Resource("Ambulancia de ayuda y evacuacion", agency, location, 0));
-		resources.add(new Resource("Medico", agency, location, 0));
-		resources.add(new Resource("Medico", agency, location, 0));
+		resources.add(new Resource("Grua alto tonelaje", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
 
 		for(int i = 0; i < resources.size(); i++){
 			

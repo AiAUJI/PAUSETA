@@ -23,7 +23,7 @@ public class HospitalGeneralAgent extends Agent {
 			map = new Map("map/test1");
 		} catch (IOException e) {
 			
-			System.out.println("Error al leer el fichero del mapa.");
+			System.out.println("Error reading the maps file.");
 			e.printStackTrace();
 		}
 		
@@ -31,9 +31,9 @@ public class HospitalGeneralAgent extends Agent {
 		location.segment = map.getIntersectionByID("Hospital general").out.get(0);
 		location.position = 0;
 		
-		Agency agency = new Agency("Hospital general", "Descripcion hospital", "Otra cosa", location, new ArrayList<Resource>());
+		Agency agency = new Agency("Hospital general", "Descripcion hospital", "Hospital", location, new ArrayList<Resource>());
 		
-		//Ponemos los recursos
+		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
 		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));

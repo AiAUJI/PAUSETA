@@ -55,10 +55,10 @@ public class TMP implements Serializable{
 		
 		if(this.requirementsMap.requirements.containsKey(name)){
 			
-			this.requirementsMap.requirements.put(name, this.requirementsMap.requirements.get(name) + 1);
+			this.requirementsMap.requirements.put(name, this.requirementsMap.requirements.get(name) + quantity);
 		} else {
 			
-			this.requirementsMap.requirements.put(name, 1);
+			this.requirementsMap.requirements.put(name, quantity);
 		}
 	}
 }
