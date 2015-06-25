@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 import enviroment.Intersection;
@@ -24,8 +23,9 @@ public class UtilitiesAndSynergies {
 		List<Triple> requirements = tmp.requirements;
 		HashMap<String, Integer> requirementsMap = tmp.requirementsMap.requirements;
 		
-		//I need to evaluate dijkstra for every resource that is in the requirements (HashMapception)
-		HashMap<String, PriorityQueue<Double>> distances = new HashMap<String, PriorityQueue<Double>>();
+		//I need to evaluate dijkstra for every resource that is in the requirements
+		HashMap<String, ArrayList<Double>> distances = new HashMap<String, ArrayList<Double>>();
+		HashMap<Resource, Double> resourcesAndDistance = new HashMap<Resource, Double>();
 
 		for(Resource resource: resources){
 
@@ -39,21 +39,24 @@ public class UtilitiesAndSynergies {
 
 					//Only evaluate the distance to those Intersections that need this kind of resource
 					if(triple.resource.equals(resource.type)){
+						
 						Double dist = map.getDistance(dijkstra, triple.intersectionID) - resource.location.position; //Deal with the offset
-
+						
+						resourcesAndDistance.put(resource, dist);
+						
 						if(distances.containsKey(resource.type)){
 
-							distances.get(resource.type).offer(dist);
+							distances.get(resource.type).add(dist);
 						}else{ //Create queue
 
-							distances.put(resource.type, new PriorityQueue<Double>());
-							distances.get(resource.type).offer(dist);
+							distances.put(resource.type, new ArrayList<Double>());
+							distances.get(resource.type).add(dist);
 						}
 					}
 				}
 			}
 		}
-
+		
 		//Now I have for every type of resource in the requirements, a list with its distances to the intersections it has to go (Sanity check)
 		//To compute the Utility value I will use the next formula (patent pending):
 		//
@@ -69,8 +72,10 @@ public class UtilitiesAndSynergies {
 			//If that resource is in the requirements
 			if(requirementsMap.containsKey(resource.type)){
 				
-				resource.value = BASEUTILITY - distances.get(resource.type).peek()/BASEUTILITY + UNITINCREMENT * distances.get(resource.type).size();
-				distances.get(resource.type).poll();
+				//Search for the distance of that specific resource
+				Double dist = resourcesAndDistance.get(resource);
+				
+				resource.value = BASEUTILITY - dist/BASEUTILITY + UNITINCREMENT * distances.get(resource.type).size();
 			}
 		}
 
