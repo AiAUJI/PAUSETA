@@ -92,6 +92,7 @@ public class PAUSETASendBehaviour extends Behaviour{
 			try {
 
 				cbToSend.setContentObject(cb);
+				this.agent.lastSentBid = cb;
 			} catch (IOException e) {
 
 				System.out.println("Error trying to serialize the object.");

@@ -59,14 +59,15 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 		CompleteBid response = null;
 
 		//I have received a message
-		if(receivedMessage != null){
+		while(receivedMessage != null){
 
 			this.messages.add(receivedMessage);
 
 			//Keep trying to receive
-			block(TIMEOUT);
-
-		}else if(this.messages.size() > 0){ //TIMEOUT milliseconds have passed without messages, we assume no one is sending messages for this.stage and this.round
+			receivedMessage = this.agent.blockingReceive(template, TIMEOUT);
+		}
+		
+		if(this.messages.size() > 0){ //TIMEOUT milliseconds have passed without messages, we assume no one is sending messages for this.stage and this.round
 
 			//We now process all received messages (if any)
 			for(ACLMessage msg: this.messages){

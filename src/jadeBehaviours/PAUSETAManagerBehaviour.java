@@ -5,8 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import bid.Pauseta;
+import enviroment.Map;
 import agentExtension.AgentWithCounter;
+import auxiliarStructures.Triple;
+import needAGoodName.Bid;
+import needAGoodName.CompleteBid;
 import needAGoodName.Resource;
+import needAGoodName.SCP;
 import needAGoodName.TMP;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -23,14 +29,16 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 	private AgentWithCounter agent;
 	private TMP tmp;
-	long startTime, stopTime;
+	private Map map;
+	long startTime, stopTime = -1;
 
-	public PAUSETAManagerBehaviour(AgentWithCounter agent, TMP tmp){
+	public PAUSETAManagerBehaviour(AgentWithCounter agent, TMP tmp, Map map){
 
 		super();
 
 		this.agent = agent;
 		this.tmp = tmp;
+		this.map = map;
 	}
 
 	@Override
@@ -52,7 +60,7 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 		//The Ontology is used to choose the function.
 		message.setOntology("TMP");
-		
+
 		//Set the object to send
 		try {
 
@@ -69,10 +77,10 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
-		
+
 		//Filter agents
 		sd.setType("Bidder");
-			
+
 		template.addServices(sd);
 
 		//Ask the yellow pages
@@ -88,10 +96,10 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 			fe.printStackTrace();
 		}
-		
+
 		//Add receiver agents
 		for(AID aid: bidderAgents){
-			
+
 			//Check so I don't send it to myself
 			if(!aid.getLocalName().equals(this.agent.getAID().getLocalName()))
 				message.addReceiver(aid);
@@ -99,54 +107,120 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 		//Actually send it
 		this.agent.send(message);
-		
+
 		//Measure time
 		startTime = System.currentTimeMillis();
-		
+
 		//Gather the total number of messages sent and the resources used
 		List<ACLMessage> messages = new ArrayList<ACLMessage>();
 		List<Resource> resources = new ArrayList<Resource>();
-		
+		CompleteBid cb = new CompleteBid();
+
 		ACLMessage receivedMessage = this.agent.blockingReceive(15000L);
 
+		System.out.println("RECEIVING");
+
 		//I have received a message
-		if(receivedMessage != null){
-			
-			stopTime = System.currentTimeMillis();
+		while(receivedMessage != null){
+
+			if(stopTime == -1){
+
+				stopTime = System.currentTimeMillis();
+			}
+
 			messages.add(receivedMessage);
 
 			//Keep trying to receive
-			block(500L);		
-		} else if(messages.size() > 0) { //We have received everything
-			
+			receivedMessage = this.agent.blockingReceive(15000L);
+		}
+
+		if(messages.size() > 0) { //We have received everything
+
 			for(ACLMessage msg: messages){
-				
+
 				if(msg.getOntology().equals("Resources")){
-					
+
 					try {
-						
+
 						@SuppressWarnings("unchecked")
 						List<Resource> aux = (List<Resource>) msg.getContentObject();
-						
+
 						resources.addAll(aux);
-						
+
 					} catch (UnreadableException e) {
-						
+
 						System.out.println("Error getting the resources.");
 						e.printStackTrace();
 					}
-				} else {
 					
+				
+				} else if(msg.getOntology().equals("CB")){
+					
+					try {
+
+						CompleteBid aux = (CompleteBid) msg.getContentObject();
+						
+						if(aux.getValue() > cb.getValue()){
+							
+							cb = aux;
+						}	
+
+					} catch (UnreadableException e) {
+
+						System.out.println("Error getting the resources.");
+						e.printStackTrace();
+					}
+					
+				} else {
+
 					this.agent.numberOfMessages += Integer.parseInt(msg.getOntology());
 				}
 			}
 		}
 		
-		//Evaluate SCP
+		//Locations (Needed for SCP)
+		List<String> locations = new ArrayList<String>();
+
+		for(Triple triple: tmp.requirements){
+
+			if(triple.resourceType.equals("Unidad de policia")){
+				for(int i=0; i<triple.quantity; i++){
+
+					locations.add(triple.intersectionID);
+				}
+			}
+		}
 		
+		//Evaluate SCP with PAUSETA solution
+		List<Resource> pausetaPatrols = new ArrayList<Resource>();
 		
+		for(Bid bid: cb.bids){
+			
+			for(Resource resource: bid.resources){
+				
+				if(resource.type.equals("Unidad de policia")){
+					
+					pausetaPatrols.add(resource);
+				}
+			}
+		}
+
+		//Evaluate SCP with all resources
+		List<Resource> patrols = new ArrayList<Resource>();
+
+		for(Resource resource: resources){
+
+			if(resource.type.equals("Unidad de policia")){
+
+				patrols.add(resource);
+			}
+		}
+
 		//Write number of messages, SCP, PAUSETA, time
-		
+		double pausetaSCP = SCP.getSCP(locations, pausetaPatrols, 0, Double.MAX_VALUE, map);
+		double allSCP = SCP.getSCP(locations, patrols, 0, Double.MAX_VALUE, map);
+
+		System.out.println("allSCP: " + allSCP + " pausetaSCP: " + pausetaSCP);
 	}
 
 	@Override

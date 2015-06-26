@@ -7,9 +7,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import auxiliarStructures.Triple;
 import enviroment.Intersection;
 import enviroment.Map;
-import needAGoodName.TMP.Triple;
 
 public class UtilitiesAndSynergies {
 
@@ -38,7 +38,7 @@ public class UtilitiesAndSynergies {
 				for(Triple triple: requirements){
 
 					//Only evaluate the distance to those Intersections that need this kind of resource
-					if(triple.resource.equals(resource.type)){
+					if(triple.resourceType.equals(resource.type)){
 						
 						Double dist = map.getDistance(dijkstra, triple.intersectionID) - resource.location.position; //Deal with the offset
 						

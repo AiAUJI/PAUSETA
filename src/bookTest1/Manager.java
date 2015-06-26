@@ -1,5 +1,8 @@
 package bookTest1;
 
+import java.io.IOException;
+
+import enviroment.Map;
 import agentExtension.AgentWithCounter;
 import needAGoodName.TMP;
 import jadeBehaviours.PAUSETAManagerBehaviour;
@@ -11,6 +14,17 @@ public class Manager extends AgentWithCounter {
 	protected void setup(){
 		
 		this.numberOfMessages = 0;
+		
+		Map map = null;
+
+		try {
+			
+			map = new Map("map/test1");
+		} catch (IOException e) {
+			
+			System.out.println("Error reading the maps file.");
+			e.printStackTrace();
+		}
 				
 		TMP tmp = new TMP();
 
@@ -30,7 +44,7 @@ public class Manager extends AgentWithCounter {
 		tmp.addResource("Unidad de policia", 1, "I-11");
 		
 		//Behaviour
-		PAUSETAManagerBehaviour behaviour = new PAUSETAManagerBehaviour(this, tmp);
+		PAUSETAManagerBehaviour behaviour = new PAUSETAManagerBehaviour(this, tmp, map);
 		
 		this.addBehaviour(behaviour);
 	}

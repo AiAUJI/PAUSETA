@@ -67,6 +67,26 @@ public class PAUSETADeregisterBehaviour extends Behaviour{
 			System.out.println("Error trying to serialize the object.");
 			e.printStackTrace();
 		}
+		
+		//Actually send it
+		this.agent.send(message);
+		
+		//Send my list of Resources
+		message = new ACLMessage(ACLMessage.INFORM);
+		message.setOntology("CB");
+		message.addReceiver(new AID( "Manager", AID.ISLOCALNAME));
+		
+		try {
+
+			message.setContentObject(this.agent.lastSentBid);
+		} catch (IOException e) {
+
+			System.out.println("Error trying to serialize the object.");
+			e.printStackTrace();
+		}
+		
+		//Actually send it
+		this.agent.send(message);
 	}
 
 	@Override

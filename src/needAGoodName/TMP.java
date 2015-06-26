@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import auxiliarStructures.Triple;
+
 /**
  * Class that encapsules a Traffic Management Plan
  *
@@ -11,27 +13,7 @@ import java.util.List;
 public class TMP implements Serializable{
 
 	private static final long serialVersionUID = -8381166099540747939L;
-	
-	/**
-	 * Auxiliar class
-	 *
-	 */
-	public class Triple implements Serializable{
 		
-		private static final long serialVersionUID = -3760283759552267737L;
-		
-		public String resource;
-		public int quantity;
-		public String intersectionID;
-		
-		Triple(String resource, int quantity, String intersectionID){
-			
-			this.resource = resource;
-			this.quantity = quantity;
-			this.intersectionID = intersectionID;
-		}
-	}
-	
 	public List<Triple> requirements;
 	public Requirement requirementsMap;
 	
