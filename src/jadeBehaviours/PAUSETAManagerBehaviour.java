@@ -1,11 +1,15 @@
 package jadeBehaviours;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
-import bid.Pauseta;
 import enviroment.Map;
 import agentExtension.AgentWithCounter;
 import auxiliarStructures.Triple;
@@ -118,7 +122,7 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 
 		ACLMessage receivedMessage = this.agent.blockingReceive(15000L);
 
-		System.out.println("RECEIVING");
+		System.out.println("Calculating");
 
 		//I have received a message
 		while(receivedMessage != null){
@@ -194,6 +198,7 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 		//Evaluate SCP with PAUSETA solution
 		List<Resource> pausetaPatrols = new ArrayList<Resource>();
 		
+		System.out.println("Pauseta patrols");
 		for(Bid bid: cb.bids){
 			
 			for(Resource resource: bid.resources){
@@ -201,6 +206,7 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 				if(resource.type.equals("Unidad de policia")){
 					
 					pausetaPatrols.add(resource);
+					System.out.println("ID: " + resource.id + " Position: " + resource.location.segment.origin.id);
 				}
 			}
 		}
@@ -208,19 +214,56 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 		//Evaluate SCP with all resources
 		List<Resource> patrols = new ArrayList<Resource>();
 
+		System.out.println("All patrols");
 		for(Resource resource: resources){
 
 			if(resource.type.equals("Unidad de policia")){
 
 				patrols.add(resource);
+				System.out.println("ID: " + resource.id + " Position: " + resource.location.segment.origin.id);
 			}
 		}
-
+		
+		Set<Resource> auxSet = new HashSet<Resource>();
+		
+		for(Resource patrullaPauseta: pausetaPatrols){
+			
+			auxSet.add(patrullaPauseta);
+		}
+		
+		if(auxSet.size() != pausetaPatrols.size()){
+			
+			System.out.println("Hay repetidos");
+		} else {
+			
+			System.out.println("No hay repetidos");
+		}
+		
+		System.out.println("Locations: " + locations.size() + " PausetaPatrols: " + pausetaPatrols.size() + " allPatrols: " + patrols.size());
+		
 		//Write number of messages, SCP, PAUSETA, time
 		double pausetaSCP = SCP.getSCP(locations, pausetaPatrols, 0, Double.MAX_VALUE, map);
+		
+		double startSCPTime = System.currentTimeMillis();
+		
+		//For every initial state (That is cycling Patrols) find the minimum
+		
+		
 		double allSCP = SCP.getSCP(locations, patrols, 0, Double.MAX_VALUE, map);
+		double stopSCPTime = System.currentTimeMillis();
 
-		System.out.println("allSCP: " + allSCP + " pausetaSCP: " + pausetaSCP);
+		System.out.println("pausetaTime: " + (stopTime-startTime) + " SCP time: " + (stopSCPTime-startSCPTime) + " allSCP: " + allSCP + " pausetaSCP: " + pausetaSCP);
+		
+		if(pausetaPatrols.size() == 6){
+			
+			try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("test1.csv", true)))) {
+				
+			    out.println((stopTime-startTime) + ", " + (stopSCPTime-startSCPTime) + ", " + allSCP + ", " + pausetaSCP + ", " + this.agent.numberOfMessages);
+			}catch (IOException e) {
+				
+			    System.out.println("Error logging");
+			}
+		}
 	}
 
 	@Override

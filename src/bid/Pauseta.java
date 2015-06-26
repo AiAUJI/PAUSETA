@@ -29,13 +29,13 @@ public class Pauseta implements Serializable{
 
 	//Array to hold my bids
 	private List<Bid> myOwnPrivateBids;
-	
+
 	//Variable to hold previous highest value
 	private double previousHighestValue;
 
 	//Comparator used to sort a CompleteBid List
 	private Comparator<Bid> bidComparator;
-	
+
 	/**
 	 * Default constructor. 
 	 */
@@ -99,7 +99,7 @@ public class Pauseta implements Serializable{
 
 		return res;
 	}
-	
+
 	/**
 	 * Updates the value for the previous highest value.
 	 * 
@@ -107,18 +107,18 @@ public class Pauseta implements Serializable{
 	 * @return A boolean whether the new value is highest than the previous one.
 	 */
 	public boolean updatePreviousHighestValue(double value){
-		
+
 		boolean ret;
-		
+
 		if(value > this.previousHighestValue){
-			
+
 			ret = true;
 			this.previousHighestValue = value;
 		}else{
-			
+
 			ret = false;
 		}
-		
+
 		return ret;
 	}
 
@@ -177,16 +177,22 @@ public class Pauseta implements Serializable{
 
 		//Sort the bids
 		Collections.sort(bids, bidComparator);
-		
+
 		while(!bids.isEmpty()){
 
+			boolean add = true;
+			
 			Bid currentBid = bids.get(0);
 			bids.remove(0);
 
-			//If the id of the bid has been used before, skip
-			if(idsUsed.contains(currentBid.id)){
+			//If the id of one of the resources of this bid has been used before, skip
+			for(Resource resource: currentBid.resources){
+				
+				if(idsUsed.contains(resource.id)){
 
-				continue;
+					add = false;
+					break;
+				}
 			}
 
 			//Resources to compare
@@ -194,16 +200,15 @@ public class Pauseta implements Serializable{
 			ArrayList<Resource> resourcesCurrentBid = currentBid.resources;
 
 			//If for each resource in the bid, it fulfills the requirement add it
-			boolean add = true;
 			Map<String, Integer> counter = new HashMap<String, Integer>();
 
 			for(Resource r: resourcesCurrentBid){
 
 				//Check if all the resource types in the currentBid are required
 				add &= requirement.requirements.containsKey(r.type);
-				
+
 				if(!add){
-					
+
 					break;
 				}
 
@@ -218,10 +223,10 @@ public class Pauseta implements Serializable{
 					counter.put(r.type, value + 1);
 				}
 			}
-			
+
 			//Add in the counter the resources that have been already added from past bids
 			for(Resource r: resourcesResult){
-				
+
 				Integer value  = counter.get(r.type);
 
 				if(value == null){
@@ -232,47 +237,51 @@ public class Pauseta implements Serializable{
 					counter.put(r.type, value + 1);
 				}
 			}
-			
+
 			//We know that all the resources in the currentBid are in the requirements
 			//Now we need to know if the counter for each resource fits within the requirements
 			if(add){
 
 				Set<String> keys = counter.keySet();
-				
+
 				for(String key: keys){
 
 					add &= (counter.get(key) <= requirement.requirements.get(key));
 				}
 			}
 
-
 			//Everything checks out, add the bid
 			if(add){
 
 				result.addBid(currentBid);
-				idsUsed.add(currentBid.id);
+
+				//Add the id of all the used resources
+				for(Resource resource: currentBid.resources){
+
+					idsUsed.add(resource.id);
+				}
 			}
-			
+
 			//Check if the requirements have already been fulfilled.
 			//Count the number of resources needed
 			int neededResources = 0;
 			Set<String> keys = requirement.requirements.keySet();
-			
+
 			for(String k: keys){
-				
+
 				neededResources += requirement.requirements.get(k);
 			}
-			
-			
+
+
 			if(result.getResources().size() == neededResources){
-				
+
 				break;
 			}
 		}
-		
+
 		//Check if the current Bid has a higher value than the previousHighestBid
 		if(result.getValue() <= this.previousHighestValue){
-			
+
 			return new CompleteBid();
 		}
 
