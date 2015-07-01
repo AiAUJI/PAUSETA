@@ -1,8 +1,7 @@
-package bookTest1;
+package bookTest1CS22;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import agentExtension.AgentWithCounter;
 import needAGoodName.Agency;
@@ -11,7 +10,7 @@ import enviroment.Location;
 import enviroment.Map;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class Policia2 extends AgentWithCounter {
+public class Gruas2 extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
@@ -31,35 +30,17 @@ public class Policia2 extends AgentWithCounter {
 		}
 		
 		Location location = new Location();
-		location.segment = map.getIntersectionByID("I-23").out.get(0);
+		location.segment = map.getIntersectionByID("Gruas 2").out.get(0);
 		location.position = 0;
 		
-		Agency agency = new Agency("Policia2", "Descripcion policia", "Policia", location, new ArrayList<Resource>());
-		
-		int numberOfCars = 5;
+		Agency agency = new Agency("Gruas 2", "Descripcion gruas", "Gruas", location, new ArrayList<Resource>());
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
-		//Fixed resources
-		resources.add(new Resource("Unidad de policia", agency, location, 0));
-		resources.add(new Resource("Unidad de policia", agency, location, 0));
-		
-		//Random positions for each car
-		for(int i=0; i<numberOfCars; i++){
-			
-			location = new Location();
-			Random rand = new Random();
-			
-			String intersectionID = map.getRandomIntersection();
-			
-			location.segment = map.getIntersectionByID(intersectionID).out.get(0);
-			
-			int randomPos= rand.nextInt((int) (location.segment.length + 1));
-			location.position = randomPos;
-			
-			resources.add(new Resource("Unidad de policia", agency, location, 0));
-		}
+		resources.add(new Resource("Grua alto tonelaje", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
 
 		for(int i = 0; i < resources.size(); i++){
 			

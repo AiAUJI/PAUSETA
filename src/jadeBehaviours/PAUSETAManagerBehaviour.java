@@ -5,13 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
 import enviroment.Map;
 import agentExtension.AgentWithCounter;
-import auxiliarStructures.Triple;
 import needAGoodName.Bid;
 import needAGoodName.CompleteBid;
 import needAGoodName.Resource;

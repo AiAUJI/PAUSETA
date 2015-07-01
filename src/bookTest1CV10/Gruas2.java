@@ -1,4 +1,4 @@
-package bookTest1;
+package bookTest1CV10;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import enviroment.Location;
 import enviroment.Map;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class HospitalGeneral extends AgentWithCounter {
+public class Gruas2 extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
@@ -30,19 +30,17 @@ public class HospitalGeneral extends AgentWithCounter {
 		}
 		
 		Location location = new Location();
-		location.segment = map.getIntersectionByID("Hospital general").out.get(0);
+		location.segment = map.getIntersectionByID("Gruas 2").out.get(0);
 		location.position = 0;
 		
-		Agency agency = new Agency("Hospital general", "Descripcion hospital", "Hospital", location, new ArrayList<Resource>());
+		Agency agency = new Agency("Gruas 2", "Descripcion gruas", "Gruas", location, new ArrayList<Resource>());
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
-		resources.add(new Resource("Ambulancia atencion medicalizada urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia normal", agency, location, 0));
-		resources.add(new Resource("Ambulancia normal", agency, location, 0));
-		resources.add(new Resource("Medico", agency, location, 0));
-		resources.add(new Resource("Medico", agency, location, 0));
+		resources.add(new Resource("Grua alto tonelaje", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
 
 		for(int i = 0; i < resources.size(); i++){
 			

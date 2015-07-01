@@ -1,7 +1,8 @@
-package bookTest1;
+package bookTest1CV10;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import agentExtension.AgentWithCounter;
 import needAGoodName.Agency;
@@ -10,7 +11,7 @@ import enviroment.Location;
 import enviroment.Map;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class Mantenimiento2 extends AgentWithCounter {
+public class Policia1 extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
@@ -30,16 +31,34 @@ public class Mantenimiento2 extends AgentWithCounter {
 		}
 		
 		Location location = new Location();
-		location.segment = map.getIntersectionByID("I-20").out.get(0);
+		location.segment = map.getIntersectionByID("I-07").out.get(0);
 		location.position = 0;
+				
+		Agency agency = new Agency("Policia1", "Descripcion policia", "Policia", location, new ArrayList<Resource>());
 		
-		Agency agency = new Agency("Mantenimiento de carreteras2", "Descripcion mantenimiento", "Mantenimiento", location, new ArrayList<Resource>());
+		int numberOfCars = 5;
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
-		resources.add(new Resource("Unidad de mantenimiento", agency, location, 0));
-		resources.add(new Resource("Unidad de mantenimiento", agency, location, 0));
+		//Fixed resources
+		resources.add(new Resource("Unidad de policia", agency, location, 0));
+		
+		//Random positions for each car
+		for(int i=0; i<numberOfCars; i++){
+			
+			location = new Location();
+			Random rand = new Random();
+			
+			String intersectionID = map.getRandomIntersection();
+			
+			location.segment = map.getIntersectionByID(intersectionID).out.get(0);
+			
+			int randomPos= rand.nextInt((int) (location.segment.length + 1));
+			location.position = randomPos;
+			
+			resources.add(new Resource("Unidad de policia", agency, location, 0));
+		}
 
 		for(int i = 0; i < resources.size(); i++){
 			

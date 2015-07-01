@@ -1,4 +1,4 @@
-package bookTest1;
+package bookTest1CV10;
 
 import java.io.IOException;
 
