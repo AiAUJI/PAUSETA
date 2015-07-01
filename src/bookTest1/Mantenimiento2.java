@@ -10,7 +10,7 @@ import enviroment.Location;
 import enviroment.Map;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class Mantenimiento extends AgentWithCounter {
+public class Mantenimiento2 extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
@@ -30,10 +30,10 @@ public class Mantenimiento extends AgentWithCounter {
 		}
 		
 		Location location = new Location();
-		location.segment = map.getIntersectionByID("I-24").out.get(0);
+		location.segment = map.getIntersectionByID("I-20").out.get(0);
 		location.position = 0;
 		
-		Agency agency = new Agency("Mantenimiento de carreteras", "Descripcion mantenimiento", "Mantenimiento", location, new ArrayList<Resource>());
+		Agency agency = new Agency("Mantenimiento de carreteras2", "Descripcion mantenimiento", "Mantenimiento", location, new ArrayList<Resource>());
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();

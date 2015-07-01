@@ -38,11 +38,7 @@ public class HospitalReyDonJaime extends AgentWithCounter {
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
-		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia de ayuda y evacuacion", agency, location, 0));
-		resources.add(new Resource("Ambulancia de ayuda y evacuacion", agency, location, 0));
-		resources.add(new Resource("Medico", agency, location, 0));
+		resources.add(new Resource("Ambulancia normal", agency, location, 0));
 		resources.add(new Resource("Medico", agency, location, 0));
 
 		for(int i = 0; i < resources.size(); i++){

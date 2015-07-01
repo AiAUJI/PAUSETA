@@ -11,7 +11,7 @@ import enviroment.Location;
 import enviroment.Map;
 import jadeBehaviours.PAUSETARegisterBehaviour;
 
-public class Policia extends AgentWithCounter {
+public class Policia1 extends AgentWithCounter {
 
 	private static final long serialVersionUID = 8293492758491163351L;
 
@@ -29,18 +29,25 @@ public class Policia extends AgentWithCounter {
 			System.out.println("Error reading the maps file.");
 			e.printStackTrace();
 		}
-				
-		Agency agency = new Agency("Policia", "Descripcion policia", "Policia", new Location(), new ArrayList<Resource>());
 		
-		int numberOfCars = 7;
+		Location location = new Location();
+		location.segment = map.getIntersectionByID("I-07").out.get(0);
+		location.position = 0;
+				
+		Agency agency = new Agency("Policia1", "Descripcion policia", "Policia", location, new ArrayList<Resource>());
+		
+		int numberOfCars = 5;
 		
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
+		//Fixed resources
+		resources.add(new Resource("Unidad de policia", agency, location, 0));
+		
 		//Random positions for each car
 		for(int i=0; i<numberOfCars; i++){
 			
-			Location location = new Location();
+			location = new Location();
 			Random rand = new Random();
 			
 			String intersectionID = map.getRandomIntersection();

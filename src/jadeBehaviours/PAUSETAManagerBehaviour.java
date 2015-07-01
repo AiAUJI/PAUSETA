@@ -5,9 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import enviroment.Map;
@@ -51,7 +50,7 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 		System.out.println("SLEEPING");
 
 		try {
-			Thread.sleep(15000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e1) {
 
 			e1.printStackTrace();
@@ -156,16 +155,16 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 						System.out.println("Error getting the resources.");
 						e.printStackTrace();
 					}
-					
-				
+
+
 				} else if(msg.getOntology().equals("CB")){
-					
+
 					try {
 
 						CompleteBid aux = (CompleteBid) msg.getContentObject();
-						
+
 						if(aux.getValue() > cb.getValue()){
-							
+
 							cb = aux;
 						}	
 
@@ -174,96 +173,60 @@ public class PAUSETAManagerBehaviour extends Behaviour{
 						System.out.println("Error getting the resources.");
 						e.printStackTrace();
 					}
-					
+
 				} else {
 
 					this.agent.numberOfMessages += Integer.parseInt(msg.getOntology());
 				}
 			}
 		}
-		
-		//Locations (Needed for SCP)
-		List<String> locations = new ArrayList<String>();
 
-		for(Triple triple: tmp.requirements){
+		//Write number of messages, SCP, PAUSETA, time	
 
-			if(triple.resourceType.equals("Unidad de policia")){
-				for(int i=0; i<triple.quantity; i++){
-
-					locations.add(triple.intersectionID);
-				}
-			}
-		}
-		
-		//Evaluate SCP with PAUSETA solution
-		List<Resource> pausetaPatrols = new ArrayList<Resource>();
-		
-		System.out.println("Pauseta patrols");
-		for(Bid bid: cb.bids){
-			
-			for(Resource resource: bid.resources){
-				
-				if(resource.type.equals("Unidad de policia")){
-					
-					pausetaPatrols.add(resource);
-					System.out.println("ID: " + resource.id + " Position: " + resource.location.segment.origin.id);
-				}
-			}
-		}
-
-		//Evaluate SCP with all resources
-		List<Resource> patrols = new ArrayList<Resource>();
-
-		System.out.println("All patrols");
-		for(Resource resource: resources){
-
-			if(resource.type.equals("Unidad de policia")){
-
-				patrols.add(resource);
-				System.out.println("ID: " + resource.id + " Position: " + resource.location.segment.origin.id);
-			}
-		}
-		
-		Set<Resource> auxSet = new HashSet<Resource>();
-		
-		for(Resource patrullaPauseta: pausetaPatrols){
-			
-			auxSet.add(patrullaPauseta);
-		}
-		
-		if(auxSet.size() != pausetaPatrols.size()){
-			
-			System.out.println("Hay repetidos");
-		} else {
-			
-			System.out.println("No hay repetidos");
-		}
-		
-		System.out.println("Locations: " + locations.size() + " PausetaPatrols: " + pausetaPatrols.size() + " allPatrols: " + patrols.size());
-		
-		//Write number of messages, SCP, PAUSETA, time
-		double pausetaSCP = SCP.getSCP(locations, pausetaPatrols, 0, Double.MAX_VALUE, map);
-		
+		//All resources SCP
 		double startSCPTime = System.currentTimeMillis();
-		
-		//For every initial state (That is cycling Patrols) find the minimum
-		
-		
-		double allSCP = SCP.getSCP(locations, patrols, 0, Double.MAX_VALUE, map);
-		double stopSCPTime = System.currentTimeMillis();
 
-		System.out.println("pausetaTime: " + (stopTime-startTime) + " SCP time: " + (stopSCPTime-startSCPTime) + " allSCP: " + allSCP + " pausetaSCP: " + pausetaSCP);
-		
-		if(pausetaPatrols.size() == 6){
+		List<Double> distancesAll = SCP.permutationSCP(tmp, resources, map);
+
+		double stopSCPTime = System.currentTimeMillis();
 			
-			try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("test1.csv", true)))) {
+		//Evaluate SCP with PAUSETA solution
+		List<Resource> pausetaResources = new ArrayList<Resource>();
+
+		for(Bid bid: cb.bids){
+
+			for(Resource resource: bid.resources){
+
+				pausetaResources.add(resource);
 				
-			    out.println((stopTime-startTime) + ", " + (stopSCPTime-startSCPTime) + ", " + allSCP + ", " + pausetaSCP + ", " + this.agent.numberOfMessages);
-			}catch (IOException e) {
-				
-			    System.out.println("Error logging");
 			}
 		}
+		
+		List<Double> distancesPAUSETA = SCP.permutationSCP(tmp, pausetaResources, map);
+		
+		//Get the sum of the distances
+		double minAllSCP = 0;
+		
+		for(Double distance: distancesAll){
+			 minAllSCP += distance;
+		}
+		
+		double minPausetaSCP = 0;
+		
+		for(Double distance: distancesPAUSETA){
+			minPausetaSCP += distance;
+		}
+
+		System.out.println("pausetaTime: " + (stopTime-startTime) + " SCP time: " + (stopSCPTime-startSCPTime) + " allSCP: " + minAllSCP + " pausetaSCP: " + minPausetaSCP);
+
+		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("test1.csv", true)))) {
+
+			out.println((stopTime-startTime) + ", " + (stopSCPTime-startSCPTime) + ", " + minAllSCP + ", " + minPausetaSCP + ", " + this.agent.numberOfMessages);
+		}catch (IOException e) {
+
+			System.out.println("Error logging");
+		}
+
 	}
 
 	@Override

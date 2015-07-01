@@ -84,8 +84,8 @@ public class PAUSETAReceiveBehaviour extends Behaviour{
 				//This is only because we had to initialize response to something  
 				if(response != null){
 
-					System.out.println("I am " + this.agent.getLocalName() + " and " + msg.getSender().getLocalName() + " has sent me this: ");
-					System.out.println(response.toString());
+					//System.out.println("I am " + this.agent.getLocalName() + " and " + msg.getSender().getLocalName() + " has sent me this: ");
+					//System.out.println(response.toString());
 
 					this.pauseta.updatePreviousHighestValue(response.value);
 

@@ -38,10 +38,12 @@ public class HospitalProvincial extends AgentWithCounter {
 		//Add the resources
 		ArrayList<Resource> resources = new ArrayList<Resource>();
 		
-		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia atencion urgente", agency, location, 0));
-		resources.add(new Resource("Ambulancia de ayuda y evacuacion", agency, location, 0));
-		resources.add(new Resource("Ambulancia de ayuda y evacuacion", agency, location, 0));
+		resources.add(new Resource("Ambulancia atencion medicalizada urgente", agency, location, 0));
+		resources.add(new Resource("Ambulancia atencion medicalizada urgente", agency, location, 0));
+		resources.add(new Resource("Ambulancia normal", agency, location, 0));
+		resources.add(new Resource("Ambulancia normal", agency, location, 0));
+		resources.add(new Resource("Ambulancia normal", agency, location, 0));
+		resources.add(new Resource("Medico", agency, location, 0));
 		resources.add(new Resource("Medico", agency, location, 0));
 		resources.add(new Resource("Medico", agency, location, 0));
 

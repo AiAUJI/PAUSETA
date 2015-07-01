@@ -33,8 +33,8 @@ public class Manager extends AgentWithCounter {
 		tmp.addResource("Grua alto tonelaje", 1, "I-03");
 		tmp.addResource("Grua normal", 2, "I-03");
 		tmp.addResource("Unidad de mantenimiento", 2, "I-03");
-		tmp.addResource("Ambulancia atencion urgente", 1, "I-03");
-		tmp.addResource("Ambulancia de ayuda y evacuacion", 3, "I-03");
+		tmp.addResource("Ambulancia atencion medicalizada urgente", 1, "I-03");
+		tmp.addResource("Ambulancia normal", 3, "I-03");
 		tmp.addResource("Medico", 3, "I-03");
 		tmp.addResource("Unidad de policia", 1, "I-02");
 		tmp.addResource("Unidad de policia", 1, "I-03");

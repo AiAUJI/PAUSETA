@@ -40,6 +40,8 @@ public class Gruas1 extends AgentWithCounter {
 		
 		resources.add(new Resource("Grua alto tonelaje", agency, location, 0));
 		resources.add(new Resource("Grua normal", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
+		resources.add(new Resource("Grua normal", agency, location, 0));
 
 		for(int i = 0; i < resources.size(); i++){
 			
